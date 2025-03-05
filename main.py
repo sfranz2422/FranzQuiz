@@ -1,6 +1,7 @@
-from flask import Flask, render_template, send_from_directory, url_for, redirect, render_template, request, flash, send_from_directory, send_file, jsonify, make_response, session
+from flask import Flask, render_template, send_from_directory, url_for, redirect, render_template, request, flash, send_from_directory, send_file, jsonify, make_response, session, make_response
 from csv import DictReader
 import uuid
+import pdfkit
 import csv
 import json
 import os
@@ -12,11 +13,14 @@ import requests
 import re
 import datetime
 import html
+from io import BytesIO
+from reportlab.pdfgen import canvas
+
 from questions import quiz1, quiz2
 app = Flask(__name__)
 # app.secret_key = os.environ['FLASK_SECRET_KEY']
 app.secret_key = "kasdjhfalsdkfhjadfls"
-
+user_data = []
 
 # List of questions with answers
 questions = [
@@ -30,12 +34,31 @@ def home():
     # Initialize session variables
     session.pop("current_index", None)
     session.pop("number_correct", None) 
+    session.pop('_flashes', None)
+    session.pop("total_questions", None)
+    session.pop("name", None)
+    session.pop("student_id", None)
+    session.pop("title", None)
     return render_template("index.html")
+
+@app.route("/sign_in/<key>/<title>", methods=["POST", "GET"])
+def sign_in(key, title):
+    if request.method == "POST":
+        name = request.form.get("name", "")
+        id = request.form.get("id", "")
+        session["name"] = name
+        session["student_id"] = id
+        session["title"] = title
+        
+        
+        return redirect(url_for("quiz", key=key, title=title))
+    return render_template("sign_in.html", key=key, title=title)
 
 
 @app.route("/quiz/<key>/<title>",methods=["GET", "POST"])
 def quiz(key, title):
-        
+   
+
     # Initialize session variables
     if "current_index" not in session:
         session["current_index"] = 0
@@ -87,7 +110,7 @@ def quiz(key, title):
         else:
             flash("Incorrect! Try again.", "danger")
 
-    return render_template("quiz.html", question=question_data["question"], key=key, title=title)
+    return render_template("quiz.html", question=question_data["question"],image=question_data["image"], key=key, title=title)
 
     
 
@@ -99,12 +122,21 @@ def finish(grade):
     # session.pop("number_correct", None)
     # session.pop("total_questions", None)
     # return "Quiz complete! <a href='/'>Restart</a>"
-    if request.method == "POST":
-        return "submitted to teacher"
+    if request.method == 'POST':
+        # Retrieve user input from the form
+        name = request.form.get('name', "")
+        grade = request.form.get('grade', "")
 
-    
+        # Validate and store the user input
+        if name and grade:
+            user_data.append({
+                'name': name,
+                'grade': grade,
+            })
 
-
+            pdf_file = generate_pdf_file()
+            return send_file(pdf_file, as_attachment=True, download_name=f"{name}-{session['title']}.pdf")
+   
     
     return render_template("finish.html", grade = grade)
 
@@ -114,8 +146,42 @@ def scramble_question_set():
     pass
 
 
+# @app.route('/generate-pdf', methods=['GET', 'POST'])
+# def generate_pdf():
+#     if request.method == 'POST':
+#         # Retrieve user input from the form
+#         name = request.form.get('name', "")
+#         grade = request.form.get('grade', "")
+
+#         # Validate and store the user input
+#         if title and author and publication_year:
+#             user_data.append({
+#                 'name': name,
+#                 'grade': grade,
+#             })
+
+#     pdf_file = generate_pdf_file()
+#     return send_file(pdf_file, as_attachment=True, download_name='book_catalog.pdf')
 
 
+def generate_pdf_file():
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer)
+
+    # Create a PDF document
+    p.drawString(100, 750, session["title"])
+
+    y = 700
+    for data in user_data:
+        p.drawString(100, y, f"Name: {data['name']}")
+        p.drawString(100, y - 20, f"Grade: {data['grade']}")
+        y -= 60
+
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+    return buffer
 
 
 if __name__ == '__main__':

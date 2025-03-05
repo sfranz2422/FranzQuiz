@@ -16,8 +16,12 @@
             background-color: #f8f9fa;
         }
         .quiz-container {
-            max-width: 500px;
+            max-width: 70%;
             width: 100%;
+            margin-top:10%
+        }
+        img{
+            max-width:300px;
         }
     </style>
 </head>
@@ -28,10 +32,15 @@
                 <div class="card-body text-center">
                     <h2 class="card-title mb-4">{{ title }}</h2>
 
-                    <p  class="card-text correct">
-                    Number Correct: {{ session['number_correct'] }}</p>
+
+                    <p  class="card-text correct"><small class="text-muted">Number Correct: {{ session['number_correct'] }}</small></p>
+                    
+                    <!-- <p  class="card-text correct">
+                    Number Correct: {{ session['number_correct'] }}</p> -->
                     <p id="question" class="lead">{{ question }}</p>
-    
+                   
+                    
+                   
                     <!-- Flash Messages -->
                     {% with messages = get_flashed_messages(with_categories=True) %}
                         {% if messages %}
@@ -45,7 +54,9 @@
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
-
+                     {% if image %}
+                    <img class="card-img-bottom" src="{{ url_for('static', filename=image) }}">
+                     {% endif %}
                 <form id="quiz-form" method="POST">
                         <div class="mb-3">
                             <!-- <input type="text" name="answer" class="form-control text-center" placeholder="Your answer" required> -->

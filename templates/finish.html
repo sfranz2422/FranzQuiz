@@ -32,9 +32,10 @@
 
 
                     <h2 class="card-title mb-4"> Current Grade: {{ grade }}</h2>
-                     <p id="question" class="lead">Do you want to submit?</p>
-                    <form id="quiz-form" method="POST" action="{{ url_for('finish', grade=grade) }}">
-
+                     <p id="question" class="lead">{{ session["name"]  }} Do you want to submit?</p>
+<form id="quiz-form" method="POST" action="{{ url_for('finish', grade=grade) }}">
+<input type="hidden" name="grade" value = "{{ grade }}">
+    <input type="hidden" name="name" value = "{{ session['name'] }}">
 
                         <div class="row g-2">
                             <div class="col">
