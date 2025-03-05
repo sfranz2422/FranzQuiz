@@ -22,30 +22,44 @@
     </style>
 </head>
 <body>
-    <div class="container">
+        <div class="container d-flex justify-content-center align-items-center">
         <div class="quiz-container">
             <div class="card shadow">
                 <div class="card-body text-center">
-                    <h2 class="card-title mb-4">Quiz Question</h2>
-                    <p class="lead">{{ question }}</p>
+                    <h2 class="card-title mb-4">{{ title }}</h2>
 
+                    <p  class="card-text correct">
+                    Number Correct: {{ session['number_correct'] }}</p>
+                    <p id="question" class="lead">{{ question }}</p>
+    
                     <!-- Flash Messages -->
                     {% with messages = get_flashed_messages(with_categories=True) %}
                         {% if messages %}
+                    <div id="flash-message">
+
                             {% for category, message in messages %}
                                 <div class="alert alert-{{ category }}" role="alert">
                                     {{ message }}
+                                </div>
                                 </div>
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
 
-                    <form method="POST">
+                <form id="quiz-form" method="POST">
                         <div class="mb-3">
                             <!-- <input type="text" name="answer" class="form-control text-center" placeholder="Your answer" required> -->
-                            <textarea name="answer" class="form-control text-center" placeholder="Your answer" required></textarea>
+                            <textarea name="answer" id="answer-input" class="form-control text-center" placeholder="Your answer"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                    <div class="row g-2">
+                        <div class="col">
+                        <button type="submit" id="submit-btn" class="btn btn-primary w-100">Submit</button>
+                        </div>
+                             <div class="col">
+                    <button type="submit" name="skip" class="btn btn-secondary w-100">Skip Question</button>
+                    </div>
+                    </div>
                     </form>
                 </div>
             </div>
@@ -54,5 +68,27 @@
 
     <!-- Bootstrap JS (optional for advanced components) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const flashMessage = document.getElementById("flash-message");
+            const quizForm = document.getElementById("quiz-form");
+            const question = document.getElementById("question");
+            const correct = document.querySelector(".correct")
+
+            if (flashMessage) {
+                const successAlert = flashMessage.querySelector(".alert-success");
+                if (successAlert) {
+                    // Disable form submission while message is displayed
+                    quizForm.style.display = "none"; 
+                    question.style.display = "none";
+                    correct.style.display = "none";
+                    // Wait 1.5 seconds, then reload the page to show the next question
+                    setTimeout(() => {
+                        window.location.href = window.location.pathname;
+                    }, 1500);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
