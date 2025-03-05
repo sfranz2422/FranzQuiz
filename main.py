@@ -92,6 +92,8 @@ def quiz(key, title):
 
         
         user_answer = request.form.get("answer", "").strip()
+        user_answer = user_answer.replace(" ", "")
+        user_answer = user_answer.replace("\n", "")
         if user_answer.lower() == question_data["answer"].lower():
             session["current_index"] += 1  # Move to next question
             session["number_correct"] += 1

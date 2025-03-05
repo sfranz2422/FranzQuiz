@@ -30,7 +30,7 @@
         <div class="quiz-container">
             <div class="card shadow">
                 <div class="card-body text-center">
-                    <h2 class="card-title mb-4">{{ title }}</h2>
+                    <h2 id="quizTitle" class="card-title mb-4">{{ title }}</h2>
 
 
                     <p  class="card-text correct"><small class="text-muted">Number Correct: {{ session['number_correct'] }}</small></p>
@@ -85,7 +85,8 @@
             const quizForm = document.getElementById("quiz-form");
             const question = document.getElementById("question");
             const correct = document.querySelector(".correct")
-
+            const image = document.querySelector("img")
+            const quizTitle = document.getElementById("quizTitle");
             if (flashMessage) {
                 const successAlert = flashMessage.querySelector(".alert-success");
                 if (successAlert) {
@@ -93,6 +94,8 @@
                     quizForm.style.display = "none"; 
                     question.style.display = "none";
                     correct.style.display = "none";
+                    image.style.display = "none";
+                    quizTitle.style.display = "none";
                     // Wait 1.5 seconds, then reload the page to show the next question
                     setTimeout(() => {
                         window.location.href = window.location.pathname;
