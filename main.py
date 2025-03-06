@@ -19,7 +19,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-from questions import quiz1, quiz2, links_and_buttons, basic_html
+from questions import quiz1, quiz2, links_and_buttons, basic_html,python_loops
 
 
 app = Flask(__name__)
@@ -92,7 +92,11 @@ def quiz(key, title):
         title = "Basic HTML"
         question_data = questions[session["current_index"]]
         session["total_questions"] = len(questions)
-    
+    if key == "python_loops":
+        questions = python_loops
+        title = "Python Loops"
+        question_data = questions[session["current_index"]]
+        session["total_questions"] = len(questions)
 
     if request.method == "POST":
 
