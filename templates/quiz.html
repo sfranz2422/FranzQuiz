@@ -22,18 +22,42 @@
         }
         img{
             max-width:300px;
+            margin:20px;
+        }
+        textarea {
+            text-align: left; /* Ensures left alignment */
+
+        }
+        .code-textarea {
+            font-family: monospace; /* Makes it look like a code block */
+            background-color: #f8f9fa; /* Light gray background */
+            color: #212529; /* Dark text */
+            border: 1px solid #dee2e6; /* Subtle border */
+            padding: 10px;
+            white-space: pre; /* Preserves formatting */
+            overflow-x: auto; /* Allows horizontal scrolling */
         }
     </style>
 </head>
 <body>
         <div class="container d-flex justify-content-center align-items-center">
         <div class="quiz-container">
+            
+            
+                <div class="container d-flex flex-column justify-content-center align-items-center text-center">
+            <h1 class="mb-0 bigText">{{ session["name"]  }}</h1><br>
+                 <h3  class="mb-0 bigText">{{ title }}</h3><br>
+                 <p  class="correct"><small class="text-muted">Number Correct: {{ session['number_correct'] }}</small></p>
+            </div>
+
+
+            
             <div class="card shadow">
                 <div class="card-body text-center">
-                    <h2 id="quizTitle" class="card-title mb-4">{{ title }}</h2>
+                   
 
 
-                    <p  class="card-text correct"><small class="text-muted">Number Correct: {{ session['number_correct'] }}</small></p>
+                   
                     
                     <!-- <p  class="card-text correct">
                     Number Correct: {{ session['number_correct'] }}</p> -->
@@ -55,12 +79,15 @@
                         {% endif %}
                     {% endwith %}
                      {% if image %}
-                    <img class="card-img-bottom" src="{{ url_for('static', filename=image) }}">
+                    <img class="card-img-bottom questionPicture" src="{{ url_for('static', filename=image) }}">
+                     {% endif %}
+                    {% if webimage %}
+                    <img class="card-img-bottom questionPicture" src="{{ image }}">
                      {% endif %}
                 <form id="quiz-form" method="POST">
                         <div class="mb-3">
                             <!-- <input type="text" name="answer" class="form-control text-center" placeholder="Your answer" required> -->
-                            <textarea name="answer" id="answer-input" class="form-control text-center" placeholder="Your answer"></textarea>
+                            <textarea name="answer" id="answer-input" class="form-control text-start code-textarea" rows="10" tyle="text-align: left; margin-top:20px" placeholder="Your answer">{{ userA | escape }}</textarea>
                         </div>
 
                     <div class="row g-2">
@@ -84,18 +111,24 @@
             const flashMessage = document.getElementById("flash-message");
             const quizForm = document.getElementById("quiz-form");
             const question = document.getElementById("question");
-            const correct = document.querySelector(".correct")
-            const image = document.querySelector("img")
-            const quizTitle = document.getElementById("quizTitle");
+            // const correct = document.querySelector(".correct")
+            const image = document.querySelector(".questionPicture")
+            // const bigText = document.querySelector(".bigText")
+            // const quizTitle2 = document.getElementById("quizTitle2");
+
             if (flashMessage) {
                 const successAlert = flashMessage.querySelector(".alert-success");
                 if (successAlert) {
                     // Disable form submission while message is displayed
                     quizForm.style.display = "none"; 
                     question.style.display = "none";
-                    correct.style.display = "none";
-                    image.style.display = "none";
-                    quizTitle.style.display = "none";
+                    // correct.style.display = "none";
+                    if (image){
+                        image.style.visibility = "hidden";
+                    }
+                    
+                    // bigText.style.display = "none";
+                    // quizTitle2.style.display = "none";
                     // Wait 1.5 seconds, then reload the page to show the next question
                     setTimeout(() => {
                         window.location.href = window.location.pathname;

@@ -15,12 +15,18 @@ import datetime
 import html
 from io import BytesIO
 from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 
-from questions import quiz1, quiz2
+from questions import quiz1, quiz2, links_and_buttons, basic_html
+
+
 app = Flask(__name__)
 # app.secret_key = os.environ['FLASK_SECRET_KEY']
 app.secret_key = "kasdjhfalsdkfhjadfls"
 user_data = []
+pdfmetrics.registerFont(TTFont('Vera','Vera.ttf'))
 
 # List of questions with answers
 questions = [
@@ -58,7 +64,7 @@ def sign_in(key, title):
 @app.route("/quiz/<key>/<title>",methods=["GET", "POST"])
 def quiz(key, title):
    
-
+    userA =""
     # Initialize session variables
     if "current_index" not in session:
         session["current_index"] = 0
@@ -76,7 +82,17 @@ def quiz(key, title):
         title = "Quiz 2"
         question_data = questions[session["current_index"]]
         session["total_questions"] = len(questions)
-
+    if key == "links_and_buttons":
+        questions = links_and_buttons
+        title = "Links and Buttons"
+        question_data = questions[session["current_index"]]
+        session["total_questions"] = len(questions)
+    if key == "basic_html":
+        questions = basic_html
+        title = "Basic HTML"
+        question_data = questions[session["current_index"]]
+        session["total_questions"] = len(questions)
+    
 
     if request.method == "POST":
 
@@ -90,14 +106,15 @@ def quiz(key, title):
             else:
                 return redirect(url_for("quiz", key=key, title=title))
 
-        
-        user_answer = request.form.get("answer", "").strip()
+        userA = request.form.get("answer", "")
+        user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '')
         user_answer = user_answer.replace(" ", "")
-        user_answer = user_answer.replace("\n", "")
-        if user_answer.lower() == question_data["answer"].lower():
+        user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\r', '')
+        answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').lower()
+        if user_answer.lower() == answerKey:
             session["current_index"] += 1  # Move to next question
             session["number_correct"] += 1
-            flash("Correct! Moving to the next question.", "success")
+            flash("Correct!", "success")
 
             
             if session["current_index"] >= len(questions):
@@ -112,7 +129,14 @@ def quiz(key, title):
         else:
             flash("Incorrect! Try again.", "danger")
 
-    return render_template("quiz.html", question=question_data["question"],image=question_data["image"], key=key, title=title)
+    if question_data["image"].startswith("http"):
+        webimage = question_data["image"]
+        image = ""
+    else:
+        image = question_data["image"]
+        webimage = ""
+        
+    return render_template("quiz.html", question=question_data["question"],image=image,webimage=webimage, key=key, title=title, userA = userA)
 
     
 
@@ -128,12 +152,17 @@ def finish(grade):
         # Retrieve user input from the form
         name = request.form.get('name', "")
         grade = request.form.get('grade', "")
+        # using now() to get current time
+        current_time = datetime.datetime.now()
 
+        # Printing value of now.
+        # print("Time:", current_time)
         # Validate and store the user input
         if name and grade:
             user_data.append({
                 'name': name,
                 'grade': grade,
+                'time' : current_time,
             })
 
             pdf_file = generate_pdf_file()
@@ -171,12 +200,15 @@ def generate_pdf_file():
     p = canvas.Canvas(buffer)
 
     # Create a PDF document
+    p.setFont('Vera', 32)
     p.drawString(100, 750, session["title"])
-
+ 
     y = 700
     for data in user_data:
         p.drawString(100, y, f"Name: {data['name']}")
-        p.drawString(100, y - 20, f"Grade: {data['grade']}")
+        p.drawString(100, y - 40, f"Grade: {data['grade']}")
+        p.setFont('Vera', 16)
+        p.drawString(100, y - 80, f"Time: {data['time']}")
         y -= 60
 
     p.showPage()
