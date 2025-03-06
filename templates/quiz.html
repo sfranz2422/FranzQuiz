@@ -21,7 +21,7 @@
             margin-top:10%
         }
         img{
-            max-width:300px;
+            max-width:80%;
             margin:20px;
         }
         textarea {
@@ -79,10 +79,10 @@
                         {% endif %}
                     {% endwith %}
                      {% if image %}
-                    <img class="card-img-bottom questionPicture" src="{{ url_for('static', filename=image) }}">
+                    <img class="card-img-bottom questionPicture img-fluid mx-auto d-block" src="{{ url_for('static', filename=image) }}">
                      {% endif %}
                     {% if webimage %}
-                    <img class="card-img-bottom questionPicture" src="{{ image }}">
+                    <img class="card-img-bottom questionPicture img-fluid mx-auto d-block" src="{{ image }}">
                      {% endif %}
                 <form id="quiz-form" method="POST">
                         <div class="mb-3">
