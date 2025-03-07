@@ -49,7 +49,9 @@ def home():
 
 @app.route("/sign_in/<key>/<title>", methods=["POST", "GET"])
 def sign_in(key, title):
-    if request.method == "POST":
+    token = uuid.uuid4()
+
+    if request.method == "POST" and 'token' in request.form:
         name = request.form.get("name", "")
         id = request.form.get("id", "")
         session["name"] = name
@@ -58,13 +60,14 @@ def sign_in(key, title):
         
         
         return redirect(url_for("quiz", key=key, title=title))
-    return render_template("sign_in.html", key=key, title=title)
+    return render_template("sign_in.html", key=key, title=title, token=token)
 
 
 @app.route("/quiz/<key>/<title>",methods=["GET", "POST"])
 def quiz(key, title):
-   
+    token = uuid.uuid4()
     userA =""
+    
     # Initialize session variables
     if "current_index" not in session:
         session["current_index"] = 0
@@ -97,9 +100,12 @@ def quiz(key, title):
         title = "Python Loops"
         question_data = questions[session["current_index"]]
         session["total_questions"] = len(questions)
+        
+    starter=question_data["starter"]
 
-    if request.method == "POST":
-
+    
+    if request.method == "POST" and 'token' in request.form:
+        starter = ""
         if "skip" in request.form:
             session["current_index"] += 1
             if session["current_index"] >= len(questions):
@@ -108,7 +114,7 @@ def quiz(key, title):
                 grade = int(grade)
                 return redirect(url_for("finish", grade = grade))
             else:
-                return redirect(url_for("quiz", key=key, title=title))
+                return redirect(url_for("quiz", key=key, title=title, token=token))
 
         userA = request.form.get("answer", "")
         user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '')
@@ -129,8 +135,9 @@ def quiz(key, title):
             
             
             
-            return redirect(url_for("quiz", key=key, title=title))
+            return redirect(url_for("quiz", key=key, title=title, token=token))
         else:
+            starter = ""
             flash("Incorrect! Try again.", "danger")
 
     if question_data["image"].startswith("http"):
@@ -140,7 +147,7 @@ def quiz(key, title):
         image = question_data["image"]
         webimage = ""
         
-    return render_template("quiz.html", question=question_data["question"],image=image,webimage=webimage, key=key, title=title, userA = userA)
+    return render_template("quiz.html", question=question_data["question"],image=image,webimage=webimage, key=key, title=title, userA = userA, token=token, starter=starter)
 
     
 
