@@ -26,6 +26,8 @@
         }
         textarea {
             text-align: left; /* Ensures left alignment */
+            tab-size: 4; /* Adjust the tab width (4 spaces wide) */
+
 
         }
         .code-textarea {
@@ -137,5 +139,21 @@
             }
         });
     </script>
+    <script>
+    document.getElementById("answer-input").addEventListener("keydown", function(e) {
+        if (e.key === "Tab") {
+            e.preventDefault(); // Prevent moving to the next input
+            let start = this.selectionStart;
+            let end = this.selectionEnd;
+
+            // Insert a tab character at the cursor position
+            this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
+
+            // Move the cursor after the inserted tab
+            this.selectionStart = this.selectionEnd = start + 1;
+        }
+    });
+    </script>
+
 </body>
 </html>

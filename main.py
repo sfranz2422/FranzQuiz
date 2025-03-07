@@ -113,8 +113,8 @@ def quiz(key, title):
         userA = request.form.get("answer", "")
         user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '')
         user_answer = user_answer.replace(" ", "")
-        user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\r', '')
-        answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').lower()
+        user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\"', '\'')
+        answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower()
         if user_answer.lower() == answerKey:
             session["current_index"] += 1  # Move to next question
             session["number_correct"] += 1

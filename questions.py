@@ -114,28 +114,28 @@ basic_html = [
 
 python_loops = [
   {
-    "question": "Write a for-loop that prints numbers from 1 to 5. Use 'i' as the variable.",
-    "answer": "for i in range(1, 6):\n    print(i)",
+    "question": "Write a for-loop that prints numbers from 1 to 5.\nUse 'i' as the variable.\nUse the tab key for indentation.",
+    "answer": "for i in range(1, 6):\n\tprint(i)",
     "image": ""
   },
   {
-    "question": "Use a for-loop to print each character in the string 'Python'. Use 'char' as the target variable",
-    "answer": "for char in 'Python':\n    print(char)",
+    "question": "Use a for-loop to print each character in the string 'Python'.\n Use 'char' as the target variable\nUse the tab key for indentation.",
+    "answer": "for char in 'Python':\n\t print(char)",
     "image": ""
   },
   {
-    "question": "Write a loop that prints only even numbers from 2 to 10. Use 'i' as the variable.",
-    "answer": "for i in range(2, 11, 2):\n    print(i)",
+    "question": "Write a loop that prints only even numbers from 2 to 10.\nUse 'i' as the variable.\nUse the tab key for indentation.",
+    "answer": "for i in range(2, 11, 2):\n\t print(i)",
     "image": ""
   },
   {
-    "question": "Use a while-loop to print numbers from 10 down to 1.  Use 'i' as the variable.",
-    "answer": "i = 10\nwhile i > 0:\n    print(i)\n    i -= 1",
+    "question": "Use a while-loop to print numbers from 10 down to 1.\nUse 'i' as the variable..\nUse the tab key for indentation.",
+    "answer": "i = 10\nwhile i > 0:\n\tprint(i)\n\ti -= 1",
     "image": ""
   },
   {
-    "question": "Write a loop that iterates through a list of numbers [3, 6, 9] and prints each number. The list is saved in a variable called 'numbers' and use the target variable 'num' in your for loop.",
-    "answer": "numbers = [3, 6, 9]\nfor num in numbers:\n    print(num)",
+    "question": "Write a loop that iterates through a list of numbers [3, 6, 9] and prints each number.\nThe list is saved in a variable called 'numbers'.\nUse the target variable 'num' in your for loop.\nUse the tab key for indentation.",
+    "answer": "numbers = [3, 6, 9]\nfor num in numbers:\n\tprint(num)",
     "image": ""
   }
 ]
