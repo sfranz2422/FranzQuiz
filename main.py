@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, url_for, redirect, render_template, request, flash, send_from_directory, send_file, jsonify, make_response, session, make_response
+from flask import Flask, render_template, send_from_directory, url_for, redirect, render_template, request, flash, send_from_directory, send_file, jsonify, make_response, session, make_response,after_this_request
 import uuid
 import csv
 import json
@@ -8,17 +8,19 @@ import io
 import requests
 import datetime
 from io import BytesIO
-from reportlab.pdfgen import canvas
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+# from reportlab.pdfgen import canvas
+# from reportlab.pdfbase import pdfmetrics
+# from reportlab.pdfbase import pdfmetrics
+# from reportlab.pdfbase.ttfonts import TTFont
+from PIL import Image, ImageDraw, ImageFont
+
 
 
 app = Flask(__name__)
 
 app.secret_key = os.environ['FLASK_SECRET_KEY']
 user_data = []
-pdfmetrics.registerFont(TTFont('Vera','Vera.ttf'))
+# pdfmetrics.registerFont(TTFont('Vera','Vera.ttf'))
 
 def get_python_loops_data():
     url="https://api.npoint.io/22d05fa3ee9f0da4f95e"
@@ -56,6 +58,8 @@ def home():
     session.pop("name", None)
     session.pop("student_id", None)
     session.pop("title", None)
+  
+    
     return render_template("index.html")
 
 @app.route("/sign_in/<key>/<title>", methods=["POST", "GET"])
@@ -167,42 +171,95 @@ def finish(grade):
         # using now() to get current time
         current_time = datetime.datetime.now()
 
-        if name and grade:
-            user_data.append({
-                'name': name,
-                'grade': grade,
-                'time' : current_time,
-            })
+        # if name and grade:
+        #     user_data.append({
+        #         'name': name,
+        #         'grade': grade,
+        #         'time' : current_time,
+        #     })
 
-            pdf_file = generate_pdf_file()
-            return send_file(pdf_file, as_attachment=True, download_name=f"{name}-{session['title']}.pdf")
+            
+            # pdf_file = generate_pdf_file()
+
+        return redirect(url_for('generate_text_file',name=name, grade=grade, current_time=current_time ))
+        # generate_text_file(name, grade, current_time)
+            # return send_file(pdf_file, as_attachment=True, download_name=f"{name}-{session['title']}.pdf")
+            # return send_file(file, as_attachment=True, download_name=f"{name}-{session['title']}.pdf")
    
     
     return render_template("finish.html", grade = grade)
 
 
 
-def generate_pdf_file():
-    buffer = BytesIO()
-    p = canvas.Canvas(buffer)
+@app.route('/download/<name>/<grade>/<current_time>')
+def generate_text_file(name, grade, current_time):
+    file_name = f"{name}-{session['title']}.png"
+    
+    id = session["student_id"]
+    # Create and write to the file
+    # try:
+    #     with open(file_name, "w") as file:
+    #         file.write(f"Name: {name}\nGrade:{grade}\nTime:{current_time}")
+    #     print(f"File '{file_name}' created successfully.")
+    #     os.chmod(filename, stat.S_IREAD)
+    # except Exception as e:
+    #     print(f"An error occurred while creating the file: {e}")
 
-    # Create a PDF document
-    p.setFont('Vera', 32)
-    p.drawString(100, 750, session["title"])
+
+    img = Image.new('RGB', (1000, 800), color=(255, 255, 255))  # White background
+    draw = ImageDraw.Draw(img)
+
+    try:
+        font = ImageFont.truetype("Vera.ttf", 36)  # Ensure the font file exists
+    except:
+        font = ImageFont.load_default()  # Fallback if font is missing
+
+    text = f"Name: {name}\nStudent id: {id}\nGrade: {grade}\nTime: {current_time}"
+    draw.multiline_text((20, 50), text, fill=(0, 0, 0), font=font)  # Black text
+
+    img.save(file_name)
+    
+    
+
+    # Delete the file
+    @after_this_request
+    def remove_file(response):
+        try:
+            os.remove(file_name)
+            print(f"File '{file_name}' deleted successfully.")
+        except FileNotFoundError:
+            print(f"Error: File '{file_name}' not found.")
+        except Exception as e:
+            print(f"An error occurred while deleting the file: {e}")
+        return response
+
+
+
+    
+    return send_file(file_name, as_attachment=True, mimetype="image/png", download_name=f"{name}-{session['title']}.png")
+
+
+# def generate_pdf_file():
+#     buffer = BytesIO()
+#     p = canvas.Canvas(buffer)
+
+#     # Create a PDF document
+#     p.setFont('Vera', 32)
+#     p.drawString(100, 750, session["title"])
  
-    y = 700
-    for data in user_data:
-        p.drawString(100, y, f"Name: {data['name']}")
-        p.drawString(100, y - 40, f"Grade: {data['grade']}")
-        p.setFont('Vera', 16)
-        p.drawString(100, y - 80, f"Time: {data['time']}")
-        y -= 60
+#     y = 700
+#     for data in user_data:
+#         p.drawString(100, y, f"Name: {data['name']}")
+#         p.drawString(100, y - 40, f"Grade: {data['grade']}")
+#         p.setFont('Vera', 16)
+#         p.drawString(100, y - 80, f"Time: {data['time']}")
+#         y -= 60
 
-    p.showPage()
-    p.save()
+#     p.showPage()
+#     p.save()
 
-    buffer.seek(0)
-    return buffer
+#     buffer.seek(0)
+#     return buffer
 
 
 if __name__ == '__main__':
