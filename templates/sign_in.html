@@ -29,26 +29,21 @@
     </style>
 </head>
 <body>
-        <div class="container d-flex justify-content-center align-items-center">
-        <div class="quiz-container">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="quiz-container w-100" style="max-width: 400px;">
             <div class="card shadow">
                 <div class="card-body text-center">
                     <h2 class="card-title mb-4">Sign In</h2>
 
-
-    
-
-
-
-
                 <form method="POST" action="{{ url_for('sign_in', key=key, title=title) }}">
-                        <div class="mb-3">
-                            <!-- <input type="text" name="answer" class="form-control text-center" placeholder="Your answer" required> -->
-                            <input type="text" name="name" id="answer-input" class="form-control text-center" placeholder="Name">
-
-                            <input type="text" name="id" id="answer-input" class="form-control text-center" placeholder="Student ID">
-                            
-                        </div>
+                       
+                    <div class="mb-3 text-center">
+                            <input type="text" name="name" id="name-input" class="form-control mx-auto text-center" placeholder="Name">
+                            </div>
+                    <div class="mb-3 text-center">
+                            <input type="text" name="id" id="id-input" class="form-control mx-auto text-center" placeholder="Student ID">
+                            </div>
+                       
 
                     <div class="row g-2">
                         <div class="col">
