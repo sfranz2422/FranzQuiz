@@ -1,11 +1,4 @@
-quiz1 = [{"question":"What are the last 4 characters of a file that contains nothing but statements like this?", "answer":".css", "image":"flower.png"},{"question":"Type the first 3 characters of CSS code that specifies styling for paragraphs.", "answer":"p{","image":""}]
-
-
-quiz2 = [{"question":"What is the capital of the US?", "answer":"dc","image":"flower.png"},{"question":"What is my name?", "answer":"Franz","image":"flower.png"},{"question":"What is the year?", "answer":"2025","image":"flower.png"}]
-
-
-
-links_and_buttons =[{'question': 'Fill in the blank for the first line that styles a link that the user has previously clicked.', 'answer': 'visited', 'image': 'links_buttons_9.png',"starter":""},{'question': 'Make an empty anchor tag without any attributes.  Include the opening and closing tag.', 'answer': '<a></a>', 'image': '',"starter":""}, {'question': 'Type the name of the attribute that contains the link address.  It is 4 letters long.', 'answer': 'href', 'image': '',"starter":""}, {'question': 'Create an anchor tag that links to example.com and has a title attribute with a value of Example.  The link text should also be Example.', 'answer': '<a href="example.com" title="Example">Example</a>', 'image': '',"starter":""}, {'question': 'Create a css rule for an anchor tag.  Leave the rule empty.', 'answer': 'a{}', 'image': '',"starter":""}, {'question': 'Create a css rule for an anchor tag that makes the foreground color blue.', 'answer': 'a{color:blue;}', 'image': '',"starter":""}, {'question': 'Create an empty css rule for an a tag that has uses the hover pseudo-class', 'answer': 'a:hover{}', 'image': '',"starter":""}, {'question': 'Fill in the blank so the anchor tag is orange when the user hovers over the link', 'answer': 'orange', 'image': 'links_buttons_8.png',"starter":""}, {'question': 'Fill in the blank to complete the first line for styling a link when it is moused over or hovered.', 'answer': 'hover', 'image': 'links_buttons_9.png',"starter":""}, {'question': 'Fill in the blank for the first line that styles a link when the user clicks it.', 'answer': 'active', 'image': 'links_buttons_9.png',"starter":""}]
+links_and_buttons =[{'question': 'Change the color of the link to red.', 'answer': 'a{\n\tcolor:red;\n}', 'image': '',"starter":"a{\n\t\n}"},{'question': 'Change the cursor to a pointer.', 'answer': 'a{\n\tcursor:pointer;\n}', 'image': '',"starter":"a{\n\t\n}"},{'question': 'Fill in the blank for the first line that styles a link that the user has previously clicked.', 'answer': 'visited', 'image': 'links_buttons_9.png',"starter":""},{'question': 'Make an empty html <a> tag without any attributes.  Include the opening and closing tag.', 'answer': '<a></a>', 'image': '',"starter":""}, {'question': 'Type the name of the attribute that contains the link address.  It is 4 letters long.', 'answer': 'href', 'image': '',"starter":""}, {'question': 'Create an anchor tag that links to example.com and has a title attribute with a value of Example.  The link text should also be Example.', 'answer': '<a href="example.com" title="Example">Example</a>', 'image': '',"starter":""}, {'question': 'Create a css rule for an anchor tag.  Leave the rule empty.', 'answer': 'a{}', 'image': '',"starter":""}, {'question': 'Create a css rule for an anchor tag that makes the foreground color blue.', 'answer': 'a{color:blue;}', 'image': '',"starter":""}, {'question': 'Create an empty css rule for an a tag that has uses the hover pseudo-class', 'answer': 'a:hover{}', 'image': '',"starter":""}, {'question': 'Fill in the blank so the anchor tag is orange when the user hovers over the link', 'answer': 'orange', 'image': 'links_buttons_8.png',"starter":""}, {'question': 'Fill in the blank to complete the first line for styling a link when it is moused over or hovered.', 'answer': 'hover', 'image': 'links_buttons_9.png',"starter":""}, {'question': 'Fill in the blank for the first line that styles a link when the user clicks it.', 'answer': 'active', 'image': 'links_buttons_9.png',"starter":""}, {'question': 'Make the link below be red by default, black when visited, green when moused over and blue when active.', 'answer': 'a:link{color:red;}\na:visited{color:black;}\na:hover{color:green;}\na:active{color:blue;}\n', 'image': '',"starter":"a:link{\n\n}\na:visited{\n\n}\na:hover{\n\n}\na:active{\n\n}\n"}]
 
 
 basic_html = [
@@ -99,4 +92,68 @@ python_loops = [
     "answer": "numbers = [3, 6, 9]\nfor num in numbers:\n\tprint(num)",
     "image": "","starter":"numbers = [3, 6, 9]\n"
   }
+]
+
+
+css_borders_padding =[
+    {
+        "question": "Add a solid red border of 2px around a div element.",
+        "answer": "div { border: 2px solid red; }",
+        "image": "",
+        "starter": "div {\n    \n}"
+    },
+    {
+        "question": "Set the padding of a paragraph to 20px on all sides.",
+        "answer": "p { padding: 20px; }",
+        "image": "",
+        "starter": "p {\n    \n}"
+    },
+    {
+        "question": "Create a div with a 10px margin on the top and bottom, but 5px on the sides.",
+        "answer": "div { margin: 10px 5px; }",
+        "image": "",
+        "starter": "div {\n    \n}"
+    },
+    {
+        "question": "Apply a dotted blue border of 3px to a span element.",
+        "answer": "span { border: 3px dotted blue; }",
+        "image": "",
+        "starter": "span {\n    \n}"
+    },
+    {
+        "question": "Set the left margin of a div to 50px and the right padding to 30px.",
+        "answer": "div { margin-left: 50px; padding-right: 30px; }",
+        "image": "",
+        "starter": "div {\n    \n}"
+    },
+    {
+        "question": "Make a div have a border-radius of 15px and a solid black border.",
+        "answer": "div { border: 2px solid black; border-radius: 15px; }",
+        "image": "",
+        "starter": "div {\n    \n}"
+    },
+    {
+        "question": "Set the padding-top of a paragraph to 25px.",
+        "answer": "p { padding-top: 25px; }",
+        "image": "",
+        "starter": "p {\n    \n}"
+    },
+    {
+        "question": "Apply a double green border of 4px to a div element.",
+        "answer": "div { border: 4px double green; }",
+        "image": "",
+        "starter": "div {\n    \n}"
+    },
+    {
+        "question": "Add 20px of padding only to the left side of a paragraph.",
+        "answer": "p { padding-left: 20px; }",
+        "image": "",
+        "starter": "p {\n    \n}"
+    },
+    {
+        "question": "Create a div with different margin values: 5px top, 10px right, 15px bottom, and 20px left.",
+        "answer": "div { margin: 5px 10px 15px 20px; }",
+        "image": "",
+        "starter": "div {\n    \n}"
+    }
 ]

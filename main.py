@@ -1,39 +1,50 @@
 from flask import Flask, render_template, send_from_directory, url_for, redirect, render_template, request, flash, send_from_directory, send_file, jsonify, make_response, session, make_response
-from csv import DictReader
 import uuid
-import pdfkit
 import csv
 import json
 import os
 import random
 import io
-import pathlib
-import hashlib
 import requests
-import re
 import datetime
-import html
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-from questions import quiz1, quiz2, links_and_buttons, basic_html,python_loops
-
 
 app = Flask(__name__)
-# app.secret_key = os.environ['FLASK_SECRET_KEY']
-app.secret_key = "kasdjhfalsdkfhjadfls"
+
+app.secret_key = os.environ['FLASK_SECRET_KEY']
 user_data = []
 pdfmetrics.registerFont(TTFont('Vera','Vera.ttf'))
 
+def get_python_loops_data():
+    url="https://api.npoint.io/22d05fa3ee9f0da4f95e"
+    res = requests.get(url).json()
+    return res
+
+def get_links_and_buttons_data():
+    url="https://api.npoint.io/c30e4cf9a778a1b9a622"
+    res = requests.get(url).json()
+    return res
+
+
+def get_basic_html_data():
+    url="https://api.npoint.io/0b9ddad402449729126c"
+    res = requests.get(url).json()
+    return res
+
+def get_borders_and_padding_data():
+    url="https://api.npoint.io/3aeeef8301d2e5df077a"
+    res = requests.get(url).json()
+    return res
+
+
+
 # List of questions with answers
-questions = [
-    {"question": "What is the capital of France?", "answer": "Paris"},
-    {"question": "What is 2 + 2?", "answer": "4"},
-    {"question": "What is the largest planet in our solar system?", "answer": "Jupiter"}
-]
+questions = []
 
 @app.route("/")
 def home():
@@ -73,33 +84,27 @@ def quiz(key, title):
         session["current_index"] = 0
         session["number_correct"] = 0
         session["total_questions"] = 0
-    # index = session["current_index"]
+ 
 
-    if key == "quiz1":
-        questions = quiz1
-        title = "Quiz 1"
-        question_data = questions[session["current_index"]]
-        session["total_questions"] = len(questions)
-    if key == "quiz2":
-        questions = quiz2
-        title = "Quiz 2"
-        question_data = questions[session["current_index"]]
-        session["total_questions"] = len(questions)
     if key == "links_and_buttons":
-        questions = links_and_buttons
+        questions = get_links_and_buttons_data()
         title = "Links and Buttons"
-        question_data = questions[session["current_index"]]
-        session["total_questions"] = len(questions)
+
     if key == "basic_html":
-        questions = basic_html
+        questions = get_basic_html_data()
         title = "Basic HTML"
-        question_data = questions[session["current_index"]]
-        session["total_questions"] = len(questions)
+
     if key == "python_loops":
-        questions = python_loops
+        questions = get_python_loops_data()
         title = "Python Loops"
-        question_data = questions[session["current_index"]]
-        session["total_questions"] = len(questions)
+
+    if key == "css_borders_padding":
+        questions = get_borders_and_padding_data()
+        title = "css_borders and padding"
+   
+    
+    question_data = questions[session["current_index"]]
+    session["total_questions"] = len(questions)
         
     starter=question_data["starter"]
 
@@ -155,10 +160,6 @@ def quiz(key, title):
 
 @app.route("/finish/<int:grade>", methods=['POST', 'GET'])
 def finish(grade):
-    # session.pop("current_index", None)  # Reset session
-    # session.pop("number_correct", None)
-    # session.pop("total_questions", None)
-    # return "Quiz complete! <a href='/'>Restart</a>"
     if request.method == 'POST':
         # Retrieve user input from the form
         name = request.form.get('name', "")
@@ -166,9 +167,6 @@ def finish(grade):
         # using now() to get current time
         current_time = datetime.datetime.now()
 
-        # Printing value of now.
-        # print("Time:", current_time)
-        # Validate and store the user input
         if name and grade:
             user_data.append({
                 'name': name,
@@ -182,28 +180,6 @@ def finish(grade):
     
     return render_template("finish.html", grade = grade)
 
-
-
-def scramble_question_set():
-    pass
-
-
-# @app.route('/generate-pdf', methods=['GET', 'POST'])
-# def generate_pdf():
-#     if request.method == 'POST':
-#         # Retrieve user input from the form
-#         name = request.form.get('name', "")
-#         grade = request.form.get('grade', "")
-
-#         # Validate and store the user input
-#         if title and author and publication_year:
-#             user_data.append({
-#                 'name': name,
-#                 'grade': grade,
-#             })
-
-#     pdf_file = generate_pdf_file()
-#     return send_file(pdf_file, as_attachment=True, download_name='book_catalog.pdf')
 
 
 def generate_pdf_file():
