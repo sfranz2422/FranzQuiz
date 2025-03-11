@@ -43,6 +43,11 @@ def get_borders_and_padding_data():
     res = requests.get(url).json()
     return res
 
+def get_css_box_model_data():
+    url="https://api.npoint.io/8be0c96872a500564ec1"
+    res = requests.get(url).json()
+    return res
+
 
 
 # List of questions with answers
@@ -105,7 +110,10 @@ def quiz(key, title):
     if key == "css_borders_padding":
         questions = get_borders_and_padding_data()
         title = "css_borders and padding"
-   
+
+    if key == "css_box_model":
+        questions = get_css_box_model_data()
+        title = "css box model"
     
     question_data = questions[session["current_index"]]
     session["total_questions"] = len(questions)
