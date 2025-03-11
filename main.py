@@ -57,6 +57,12 @@ def get_p5play_basics_data():
     url="https://api.npoint.io/81392477ca243d99e34b"
     res = requests.get(url).json()
     return res
+
+
+def get_links_buttons_two_data():
+    url="https://api.npoint.io/9cbe6a8116e569a99093"
+    res = requests.get(url).json()
+    return res
 # List of questions with answers
 questions = []
 
@@ -129,6 +135,11 @@ def quiz(key, title):
     if key == "p5play_basics":
         questions = get_p5play_basics_data()
         title = "p5 Play Basics"
+
+    if key == "links_buttons_two":
+        questions = get_links_buttons_two_data()
+        title = "links buttons part 2"
+        
      
     question_data = questions[session["current_index"]]
     session["total_questions"] = len(questions)
@@ -149,10 +160,20 @@ def quiz(key, title):
                 return redirect(url_for("quiz", key=key, title=title, token=token))
 
         userA = request.form.get("answer", "")
-        user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '')
-        user_answer = user_answer.replace(" ", "")
-        user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\"', '\'')
-        answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower()
+
+        if questions[0]["type"] == '':
+            user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\t','')
+            user_answer = user_answer.replace(" ", "")
+            user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\"', '\'')
+            answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower().replace('\t','')
+        elif questions[0]["type"] == 'python':
+            user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '')
+            user_answer = user_answer.replace(" ", "")
+            user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\"', '\'')
+            answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower()
+
+
+        
         if user_answer.lower() == answerKey:
             session["current_index"] += 1  # Move to next question
             session["number_correct"] += 1

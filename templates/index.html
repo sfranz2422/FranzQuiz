@@ -58,16 +58,25 @@
                     <div class="card-body">
                         <h5 class="card-title">Web Design 1</h5>
                         <p class="card-text">Choose A Practice Set</p>
-                        <a href="{{ url_for('sign_in', key='links_and_buttons', title='Links and Buttons')}}" class="btn btn-primary mb-3" >Links and Buttons</a>
-                        
-
-                         <a href="{{ url_for('sign_in', key='basic_html', title='Basic HTML')}}" class="btn btn-primary mb-3" >Basic HTML</a>
+                     
 
 
-                        <a href="{{ url_for('sign_in', key='css_borders_padding', title='css borders and padding')}}" class="btn btn-primary mb-3" >css borders and padding</a>
+                        <div class="list-group">
 
-                         <a href="{{ url_for('sign_in', key='css_box_model', title='css box model')}}" class="btn btn-primary mb-3" >css box model</a>
 
+                            
+                              <a href="{{ url_for('sign_in', key='basic_html', title='Basic HTML')}}" class="list-group-item list-group-item-action " >Basic HTML</a>
+                              <a href="{{ url_for('sign_in', key='links_and_buttons', title='Links and Buttons')}}" class="list-group-item list-group-item-action" >Links and Buttons</a>
+                           
+                          </a>
+
+                            <a href="{{ url_for('sign_in', key='links_buttons_two', title='links buttons part 2')}}" class="list-group-item list-group-item-action" >Links and Buttons Part 2</a>
+                         
+                                <a href="{{ url_for('sign_in', key='css_borders_padding', title='css borders and padding')}}" class="list-group-item list-group-item-action" >css borders and padding</a>
+                                <a href="{{ url_for('sign_in', key='css_box_model', title='css box model')}}" class="list-group-item list-group-item-action" >css box model</a>
+
+
+                        </div>
 
                         
                     </div>
@@ -80,8 +89,10 @@
                     <div class="card-body">
                         <h5 class="card-title">Web Design 2</h5>
                         <p class="card-text">Choose A Practice Set</p>
-                        <a href="#" class="btn btn-danger" >Jinja Basics</a>
-                    </div>
+                         <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action" >Jinja Basics</a>
+                             </div>
+                         </div>
                 </div>
             </div>
 
@@ -92,10 +103,10 @@
                         <h5 class="card-title">JavaScript</h5>
                         <p class="card-text">Choose A Practice Set</p>
             
+                         <div class="list-group">
+                         <a href="{{ url_for('sign_in', key='p5play_basics', title='p5 Play Basics')}}" class="list-group-item list-group-item-action" >p5 Play Basics</a>
 
-                         <a href="{{ url_for('sign_in', key='p5play_basics', title='p5 Play Basics')}}" class="btn btn-primary" >p5 Play Basics</a>
-
-
+                             </div>
                         
                     </div>
                 </div>
@@ -107,10 +118,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Python</h5>
                         <p class="card-text">Choose A Practice Set</p>
-                        <a href="{{ url_for('sign_in', key='python_loops', title='Python Loops')}}" class="btn btn-primary" >Python Loops</a>
+                           <div class="list-group">
+                        <a href="{{ url_for('sign_in', key='python_loops', title='Python Loops')}}" class="list-group-item list-group-item-action" >Python Loops</a>
 
 
-                        <a href="{{ url_for('sign_in', key='file_handling', title='Python Files')}}" class="btn btn-primary" >Python Files</a>
+                        <a href="{{ url_for('sign_in', key='file_handling', title='Python Files')}}" class="list-group-item list-group-item-action" >Python Files</a>
+                           </div>
                     </div>
                 </div>
             </div>
