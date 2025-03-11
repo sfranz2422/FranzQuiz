@@ -31,18 +31,19 @@
 
 
 
-                    <h2 class="card-title mb-4"> Current Grade: {{ grade }}</h2>
-                     <p id="question" class="lead">{{ session["name"]  }}, do you want to generate your report?</p>
+                    <h2 class="card-title mb-4">Current Grade: {{ grade }}</h2>
+                     <h4 class="card-title mb-4">After your report is created, attach the downloaded picture to the Google Classroom Assignment.</h4>
+                     <p id="question" class="lead">Do you want to generate your report or try again?</p>
 <form id="quiz-form" method="POST" action="{{ url_for('finish', grade=grade) }}">
 <input type="hidden" name="grade" value = "{{ grade }}">
     <input type="hidden" name="name" value = "{{ session['name'] }}">
 
                         <div class="row g-2">
                             <div class="col">
-    <button type="submit" id="submit-btn" class="btn btn-primary w-100">Yes</button>
+    <button type="submit" id="submit-btn" class="btn btn-primary w-100">Generate Report</button>
                             </div>
                              <div class="col">
-        <a href="{{ url_for('home') }}" class="btn btn-secondary w-100">Start Over</a>
+        <a href="{{ url_for('home') }}" class="btn btn-secondary w-100">Try Again</a>
                                  </div>
                                  </div>
                     </form>

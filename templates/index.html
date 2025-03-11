@@ -91,7 +91,12 @@
                     <div class="card-body">
                         <h5 class="card-title">JavaScript</h5>
                         <p class="card-text">Choose A Practice Set</p>
-                        <a href="#" class="btn btn-dark">Creating a Sprite</a>
+            
+
+                         <a href="{{ url_for('sign_in', key='p5play_basics', title='p5 Play Basics')}}" class="btn btn-primary" >p5 Play Basics</a>
+
+
+                        
                     </div>
                 </div>
             </div>
@@ -100,12 +105,12 @@
             <div class="col">
                 <div class="card shadow">
                     <div class="card-body">
-                        <h5 class="card-title">Intro to Programming</h5>
+                        <h5 class="card-title">Python</h5>
                         <p class="card-text">Choose A Practice Set</p>
                         <a href="{{ url_for('sign_in', key='python_loops', title='Python Loops')}}" class="btn btn-primary" >Python Loops</a>
 
 
-                        
+                        <a href="{{ url_for('sign_in', key='file_handling', title='Python Files')}}" class="btn btn-primary" >Python Files</a>
                     </div>
                 </div>
             </div>

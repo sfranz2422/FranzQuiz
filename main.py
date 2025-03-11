@@ -48,8 +48,15 @@ def get_css_box_model_data():
     res = requests.get(url).json()
     return res
 
+def get_file_handling_data():
+    url="https://api.npoint.io/beadacc26a1b6b32bbf2"
+    res = requests.get(url).json()
+    return res
 
-
+def get_p5play_basics_data():
+    url="https://api.npoint.io/81392477ca243d99e34b"
+    res = requests.get(url).json()
+    return res
 # List of questions with answers
 questions = []
 
@@ -114,7 +121,15 @@ def quiz(key, title):
     if key == "css_box_model":
         questions = get_css_box_model_data()
         title = "css box model"
-    
+
+    if key == "file_handling":
+        questions = get_file_handling_data()
+        title = "Python Files"
+        
+    if key == "p5play_basics":
+        questions = get_p5play_basics_data()
+        title = "p5 Play Basics"
+     
     question_data = questions[session["current_index"]]
     session["total_questions"] = len(questions)
         
