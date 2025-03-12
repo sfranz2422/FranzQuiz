@@ -160,6 +160,12 @@ def quiz(key, title):
                 grade = int(grade)
                 return redirect(url_for("finish", grade = grade))
             else:
+                session["userA"] = ""
+                session["starter"] = ""
+                session.pop("starter", None)
+                session.pop("userA", None)
+                session.pop('_flashes', None)
+                
                 return redirect(url_for("quiz", key=key, title=title, token=token))
 
     
@@ -213,6 +219,7 @@ def quiz(key, title):
                     session["current_index"] += 1  # Move to next question
                     session["number_correct"] += 1
                     session["userA"] = ""
+                    session.pop("userA", None)
                     session.pop("starter", None)
                     session.pop('_flashes', None)
                     flash("Correct!", "success")
@@ -238,7 +245,9 @@ def quiz(key, title):
     
     if "starter" not in session or session["starter"] != "":
         session["starter"] = question_data["starter"]
-
+        
+    if "userA" not in session:
+        session["userA"] = ""
     
     if question_data["image"].startswith("http"):
         webimage = question_data["image"]
