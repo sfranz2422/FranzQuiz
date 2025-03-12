@@ -89,7 +89,7 @@
                 <form id="quiz-form" method="POST">
                         <div class="mb-3">
                             <!-- <input type="text" name="answer" class="form-control text-center" placeholder="Your answer" required> -->
-                            <textarea name="answer" id="answer-input" class="form-control text-start code-textarea" rows="10" tyle="text-align: left; margin-top:20px" placeholder="Your answer">{{ userA | escape }}{{ starter }}</textarea>
+                            <textarea name="answer" id="answer-input" class="form-control text-start code-textarea" rows="10" tyle="text-align: left; margin-top:20px" placeholder="Your answer">{{ session["userA"]  | escape }}{{ starter }}</textarea>
                         </div>
 <input type="hidden" value="{{ token }}" name="token">
                     <div class="row g-2">

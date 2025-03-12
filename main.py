@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, url_for, redirect, render_template, request, flash, send_from_directory, send_file, jsonify, make_response, session, make_response,after_this_request
+from flask import Flask, render_template, send_from_directory, url_for, redirect, render_template, request, flash, send_from_directory, send_file, jsonify, make_response, session, make_response,after_this_request,get_flashed_messages
 import uuid
 import csv
 import json
@@ -76,14 +76,14 @@ def home():
     session.pop("name", None)
     session.pop("student_id", None)
     session.pop("title", None)
-  
+    session.pop("userA", None)
     
     return render_template("index.html")
 
 @app.route("/sign_in/<key>/<title>", methods=["POST", "GET"])
 def sign_in(key, title):
     token = uuid.uuid4()
-
+    
     if request.method == "POST" and 'token' in request.form:
         name = request.form.get("name", "")
         id = request.form.get("id", "")
@@ -99,8 +99,8 @@ def sign_in(key, title):
 @app.route("/quiz/<key>/<title>",methods=["GET", "POST"])
 def quiz(key, title):
     token = uuid.uuid4()
-    userA =""
-    
+    userA = ""
+
     # Initialize session variables
     if "current_index" not in session:
         session["current_index"] = 0
@@ -160,38 +160,82 @@ def quiz(key, title):
                 return redirect(url_for("quiz", key=key, title=title, token=token))
 
         userA = request.form.get("answer", "")
-
-        if questions[0]["type"] == '':
-            user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\t','')
-            user_answer = user_answer.replace(" ", "")
-            user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\"', '\'')
-            answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower().replace('\t','')
-        elif questions[0]["type"] == 'python':
+      
+       
+        if questions[0]["type"] == 'python':
             user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '')
             user_answer = user_answer.replace(" ", "")
             user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\"', '\'')
-            answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower()
-
+            # answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower()
 
         
-        if user_answer.lower() == answerKey:
-            session["current_index"] += 1  # Move to next question
-            session["number_correct"] += 1
-            flash("Correct!", "success")
+        else:
+            user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\t','')
+            user_answer = user_answer.replace(" ", "")
+            user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\"', '\'')
+            # answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower().replace('\t','')
+
 
             
-            if session["current_index"] >= len(questions):
-                grade =  session["number_correct"] / session["total_questions"] 
-                grade = grade * 100
-                grade = int(grade)
-                return redirect(url_for("finish", grade = grade))
             
-            
-            
-            return redirect(url_for("quiz", key=key, title=title, token=token))
+
+        if questions[0]["type"] == 'python':
+            for answer in question_data["answer"]:
+                check_answer = answer.strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower()
+                if user_answer.lower() == check_answer:
+                    session["current_index"] += 1  # Move to next question
+                    session["number_correct"] += 1
+                    session["userA"] = ""
+                    userA = ""
+                    session.pop('_flashes', None)
+                    flash("Correct!", "success")
+                  
+                else:
+                    starter = ""
+                    session["userA"] = userA  # Save user input
+                    session.pop('_flashes', None)
+                    flash("Incorrect! Try again.", "danger")
+                  
+
+                if session["current_index"] >= len(questions):
+                    grade =  session["number_correct"] / session["total_questions"] 
+                    grade = grade * 100
+                    grade = int(grade)
+                    return redirect(url_for("finish", grade = grade))
+
+        
+
         else:
-            starter = ""
-            flash("Incorrect! Try again.", "danger")
+            for answer in question_data["answer"]:
+                check_answer = answer.strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower().replace('\t','')
+                if user_answer.lower() == check_answer:
+                    session["current_index"] += 1  # Move to next question
+                    session["number_correct"] += 1
+                    session["userA"] = ""
+                    userA = ""
+                    session.pop('_flashes', None)
+                    flash("Correct!", "success")
+                   
+                else:
+                    starter = ""
+                    session["userA"] = userA  # Save user input
+                    session.pop('_flashes', None)
+                    flash("Incorrect! Try again.", "danger")
+                
+        
+        
+                if session["current_index"] >= len(questions):
+                    grade =  session["number_correct"] / session["total_questions"] 
+                    grade = grade * 100
+                    grade = int(grade)
+                    return redirect(url_for("finish", grade = grade))
+        
+        
+        
+        return redirect(url_for("quiz", key=key, title=title, token=token))
+    
+        
+        
 
     if question_data["image"].startswith("http"):
         webimage = question_data["image"]
@@ -199,7 +243,9 @@ def quiz(key, title):
     else:
         image = question_data["image"]
         webimage = ""
-        
+
+    
+    get_flashed_messages()  # This clears old messages before rendering
     return render_template("quiz.html", question=question_data["question"],image=image,webimage=webimage, key=key, title=title, userA = userA, token=token, starter=starter)
 
     
@@ -215,20 +261,10 @@ def finish(grade):
         # using now() to get current time
         current_time = datetime.datetime.now()
 
-        # if name and grade:
-        #     user_data.append({
-        #         'name': name,
-        #         'grade': grade,
-        #         'time' : current_time,
-        #     })
 
-            
-            # pdf_file = generate_pdf_file()
 
         return redirect(url_for('generate_text_file',name=name, grade=grade, current_time=current_time ))
-        # generate_text_file(name, grade, current_time)
-            # return send_file(pdf_file, as_attachment=True, download_name=f"{name}-{session['title']}.pdf")
-            # return send_file(file, as_attachment=True, download_name=f"{name}-{session['title']}.pdf")
+       
    
     
     return render_template("finish.html", grade = grade)
@@ -240,14 +276,7 @@ def generate_text_file(name, grade, current_time):
     file_name = f"{name}-{session['title']}.png"
     
     id = session["student_id"]
-    # Create and write to the file
-    # try:
-    #     with open(file_name, "w") as file:
-    #         file.write(f"Name: {name}\nGrade:{grade}\nTime:{current_time}")
-    #     print(f"File '{file_name}' created successfully.")
-    #     os.chmod(filename, stat.S_IREAD)
-    # except Exception as e:
-    #     print(f"An error occurred while creating the file: {e}")
+    
 
 
     img = Image.new('RGB', (1000, 800), color=(255, 255, 255))  # White background
@@ -283,27 +312,6 @@ def generate_text_file(name, grade, current_time):
     return send_file(file_name, as_attachment=True, mimetype="image/png", download_name=f"{name}-{session['title']}.png")
 
 
-# def generate_pdf_file():
-#     buffer = BytesIO()
-#     p = canvas.Canvas(buffer)
-
-#     # Create a PDF document
-#     p.setFont('Vera', 32)
-#     p.drawString(100, 750, session["title"])
- 
-#     y = 700
-#     for data in user_data:
-#         p.drawString(100, y, f"Name: {data['name']}")
-#         p.drawString(100, y - 40, f"Grade: {data['grade']}")
-#         p.setFont('Vera', 16)
-#         p.drawString(100, y - 80, f"Time: {data['time']}")
-#         y -= 60
-
-#     p.showPage()
-#     p.save()
-
-#     buffer.seek(0)
-#     return buffer
 
 
 if __name__ == '__main__':
