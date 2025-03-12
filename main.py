@@ -77,7 +77,7 @@ def home():
     session.pop("student_id", None)
     session.pop("title", None)
     session.pop("userA", None)
-    
+    session.pop("starter", None)
     return render_template("index.html")
 
 @app.route("/sign_in/<key>/<title>", methods=["POST", "GET"])
@@ -99,8 +99,7 @@ def sign_in(key, title):
 @app.route("/quiz/<key>/<title>",methods=["GET", "POST"])
 def quiz(key, title):
     token = uuid.uuid4()
-    userA = ""
-
+    
     # Initialize session variables
     if "current_index" not in session:
         session["current_index"] = 0
@@ -144,11 +143,15 @@ def quiz(key, title):
     question_data = questions[session["current_index"]]
     session["total_questions"] = len(questions)
         
-    starter=question_data["starter"]
-
     
     if request.method == "POST" and 'token' in request.form:
-        starter = ""
+        session.pop("starter", "")
+
+        session["userA"]  = request.form.get("answer", "")
+        userA =  request.form.get("answer", "")
+        session["userA"] = userA
+
+        
         if "skip" in request.form:
             session["current_index"] += 1
             if session["current_index"] >= len(questions):
@@ -159,22 +162,21 @@ def quiz(key, title):
             else:
                 return redirect(url_for("quiz", key=key, title=title, token=token))
 
-        userA = request.form.get("answer", "")
-      
-       
+    
+        
+
+        
         if questions[0]["type"] == 'python':
             user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '')
             user_answer = user_answer.replace(" ", "")
             user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\"', '\'')
-            # answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower()
-
+           
         
         else:
             user_answer = request.form.get("answer", "").strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\t','')
             user_answer = user_answer.replace(" ", "")
             user_answer = user_answer.replace("\n", "").replace('\r\n', '').replace('\"', '\'')
-            # answerKey = question_data["answer"].strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower().replace('\t','')
-
+           
 
             
             
@@ -186,22 +188,21 @@ def quiz(key, title):
                     session["current_index"] += 1  # Move to next question
                     session["number_correct"] += 1
                     session["userA"] = ""
-                    userA = ""
+                    session.pop("starter", None)
                     session.pop('_flashes', None)
                     flash("Correct!", "success")
                   
                 else:
-                    starter = ""
-                    session["userA"] = userA  # Save user input
+                    session["starter"] = ""  # Explicitly reset starter
                     session.pop('_flashes', None)
                     flash("Incorrect! Try again.", "danger")
                   
 
-                if session["current_index"] >= len(questions):
-                    grade =  session["number_correct"] / session["total_questions"] 
-                    grade = grade * 100
-                    grade = int(grade)
-                    return redirect(url_for("finish", grade = grade))
+            if session["current_index"] >= len(questions):
+                grade =  session["number_correct"] / session["total_questions"] 
+                grade = grade * 100
+                grade = int(grade)
+                return redirect(url_for("finish", grade = grade))
 
         
 
@@ -212,31 +213,33 @@ def quiz(key, title):
                     session["current_index"] += 1  # Move to next question
                     session["number_correct"] += 1
                     session["userA"] = ""
-                    userA = ""
+                    session.pop("starter", None)
                     session.pop('_flashes', None)
                     flash("Correct!", "success")
                    
                 else:
-                    starter = ""
-                    session["userA"] = userA  # Save user input
+                    session["starter"] = ""  # Explicitly reset starter
                     session.pop('_flashes', None)
                     flash("Incorrect! Try again.", "danger")
                 
         
         
-                if session["current_index"] >= len(questions):
-                    grade =  session["number_correct"] / session["total_questions"] 
-                    grade = grade * 100
-                    grade = int(grade)
-                    return redirect(url_for("finish", grade = grade))
+            if session["current_index"] >= len(questions):
+                grade =  session["number_correct"] / session["total_questions"] 
+                grade = grade * 100
+                grade = int(grade)
+                return redirect(url_for("finish", grade = grade))
         
         
         
         return redirect(url_for("quiz", key=key, title=title, token=token))
     
         
-        
+    
+    if "starter" not in session or session["starter"] != "":
+        session["starter"] = question_data["starter"]
 
+    
     if question_data["image"].startswith("http"):
         webimage = question_data["image"]
         image = ""
@@ -244,9 +247,9 @@ def quiz(key, title):
         image = question_data["image"]
         webimage = ""
 
+    total_questions = len(questions)
     
-    get_flashed_messages()  # This clears old messages before rendering
-    return render_template("quiz.html", question=question_data["question"],image=image,webimage=webimage, key=key, title=title, userA = userA, token=token, starter=starter)
+    return render_template("quiz.html", question=question_data["question"],image=image,webimage=webimage, key=key, title=title, userA = session.get("userA",""), token=token, starter=session.get("starter", "") , total_questions=total_questions,current_index=session["current_index"])
 
     
 

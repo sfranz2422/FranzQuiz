@@ -44,12 +44,15 @@
 <body>
         <div class="container d-flex justify-content-center align-items-center">
         <div class="quiz-container">
+            user anwer {{ userA  | escape }}
+            <br>
             
+            starter {{ starter }}
             
                 <div class="container d-flex flex-column justify-content-center align-items-center text-center">
             <h1 class="mb-0 bigText">{{ session["name"]  }}</h1><br>
                  <h3  class="mb-0 bigText">{{ title }}</h3><br>
-                 <p  class="correct"><small class="text-muted">Number Correct: {{ session['number_correct'] }}</small></p>
+                 <p  class="correct"><small class="text-muted">Correct: {{ session['number_correct'] }} / {{ total_questions }}</small></p> 
             </div>
 
 
@@ -63,7 +66,7 @@
                     
                     <!-- <p  class="card-text correct">
                     Number Correct: {{ session['number_correct'] }}</p> -->
-                    <p id="question" class="lead">{{ question | safe }}</p>
+                    <p id="question" class="lead"> {{ current_index + 1 }}. {{ question | safe }}</p>
                    
                     
                    
@@ -89,15 +92,15 @@
                 <form id="quiz-form" method="POST">
                         <div class="mb-3">
                             <!-- <input type="text" name="answer" class="form-control text-center" placeholder="Your answer" required> -->
-                            <textarea name="answer" id="answer-input" class="form-control text-start code-textarea" rows="10" tyle="text-align: left; margin-top:20px" placeholder="Your answer">{{ session["userA"]  | escape }}{{ starter }}</textarea>
+                            <textarea name="answer" id="answer-input" class="form-control text-start code-textarea" rows="10" tyle="text-align: left; margin-top:20px" placeholder="Your answer">{{ userA  | escape }}{{ starter }}</textarea>
                         </div>
 <input type="hidden" value="{{ token }}" name="token">
                     <div class="row g-2">
                         <div class="col">
-                        <button type="submit" id="submit-btn" class="btn btn-primary w-100">Submit</button>
+                        <button type="submit" id="submit-btn" class="btn btn-success w-100">Submit</button>
                         </div>
                              <div class="col">
-                    <button type="submit" name="skip" class="btn btn-secondary w-100">Skip</button>
+                    <button type="submit" name="skip" class="btn btn-danger w-100">Skip</button>
                     </div>
                     </div>
                     </form>
