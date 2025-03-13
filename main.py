@@ -186,8 +186,9 @@ def quiz(key, title):
 
             
             
-
+       
         if questions[0]["type"] == 'python':
+            correct = False
             for answer in question_data["answer"]:
                 check_answer = answer.strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower()
                 if user_answer.lower() == check_answer:
@@ -197,11 +198,16 @@ def quiz(key, title):
                     session.pop("starter", None)
                     session.pop('_flashes', None)
                     flash("Correct!", "success")
+                    correct = True
+                    break
                   
+            if not correct:
+                session["starter"] = ""  # Explicitly reset starter
+                session.pop('_flashes', None)
+                if question_data['feedback'] == "":
+                    flash("Incorrect! Try again","danger")
                 else:
-                    session["starter"] = ""  # Explicitly reset starter
-                    session.pop('_flashes', None)
-                    flash("Incorrect! Try again.", "danger")
+                    flash(f"Incorrect! Here is a partial solution to help you out.<br><br><pre style='margin-left:20px; font-family:monospace;'>{question_data['feedback']}</pre>", "danger")  
                   
 
             if session["current_index"] >= len(questions):
@@ -213,6 +219,7 @@ def quiz(key, title):
         
 
         else:
+            correct = False
             for answer in question_data["answer"]:
                 check_answer = answer.strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower().replace('\t','')
                 if user_answer.lower() == check_answer:
@@ -223,12 +230,16 @@ def quiz(key, title):
                     session.pop("starter", None)
                     session.pop('_flashes', None)
                     flash("Correct!", "success")
+                    correct = True
+                    break
                    
+            if not correct:
+                session["starter"] = ""  # Explicitly reset starter
+                session.pop('_flashes', None)
+                if question_data['feedback'] == "":
+                    flash("Incorrect! Try again","danger")
                 else:
-                    session["starter"] = ""  # Explicitly reset starter
-                    session.pop('_flashes', None)
-                    flash("Incorrect! Try again.", "danger")
-                
+                    flash(f"Incorrect! Here is a partial solution to help you out.<br><br><pre style='margin-left:20px; font-family:monospace;'>{question_data['feedback']}</pre>", "danger")               
         
         
             if session["current_index"] >= len(questions):
