@@ -63,6 +63,19 @@ def get_links_buttons_two_data():
     url="https://api.npoint.io/9cbe6a8116e569a99093"
     res = requests.get(url).json()
     return res
+
+def get_css_box_model_two_data():
+    url="https://api.npoint.io/e30127563f9d1cd04228"
+    res = requests.get(url).json()
+    return res
+
+def get_kaplay_basics_data():
+    url="https://api.npoint.io/ff09c70f8b4968120f16"
+    res = requests.get(url).json()
+    return res
+
+
+
 # List of questions with answers
 questions = []
 
@@ -86,6 +99,8 @@ def home():
 
 @app.route("/sign_in/<key>/<title>", methods=["POST", "GET"])
 def sign_in(key, title):
+    if key == "not-ready":
+        return redirect(url_for("home"))
     token = uuid.uuid4()
     
     if request.method == "POST" and 'token' in request.form:
@@ -142,8 +157,21 @@ def quiz(key, title):
     if key == "links_buttons_two":
         questions = get_links_buttons_two_data()
         title = "links buttons part 2"
-        
-     
+
+    if key == "css_box_model_two":
+        questions = get_css_box_model_two_data()
+        title = "css box model two"
+    
+    if key == "kaplay_basics":
+        questions = get_kaplay_basics_data()
+        title = "Kaplay Basics"
+
+
+   
+
+
+
+    
     question_data = questions[session["current_index"]]
     session["total_questions"] = len(questions)
     notes = question_data["notes"]
