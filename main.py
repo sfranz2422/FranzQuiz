@@ -74,6 +74,10 @@ def get_kaplay_basics_data():
     res = requests.get(url).json()
     return res
 
+def get_jinja_basics_data():
+    url="https://api.npoint.io/f108b722ac27b52908f1"
+    res = requests.get(url).json()
+    return res
 
 
 # List of questions with answers
@@ -166,8 +170,11 @@ def quiz(key, title):
         questions = get_kaplay_basics_data()
         title = "Kaplay Basics"
 
+    if key == "jinja_basics":
+        questions = get_jinja_basics_data()
+        title = "Jinja Basics"
 
-   
+    
 
 
 
