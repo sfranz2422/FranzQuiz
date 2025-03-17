@@ -414,7 +414,9 @@ def generate_text_file(name, grade, current_time):
     return send_file(file_name, as_attachment=True, mimetype="image/png", download_name=f"{name}-{session['title']}.png")
 
 
-
+@app.route('/ads.txt')
+def ads():
+       return send_from_directory(app.static_folder, request.path[1:])
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5000)
