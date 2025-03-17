@@ -78,6 +78,10 @@ def home():
     session.pop("title", None)
     session.pop("userA", None)
     session.pop("starter", None)
+    session.pop("notes", None)
+    session.pop("wrong_count", None)
+
+
     return render_template("index.html")
 
 @app.route("/sign_in/<key>/<title>", methods=["POST", "GET"])
@@ -105,7 +109,7 @@ def quiz(key, title):
         session["current_index"] = 0
         session["number_correct"] = 0
         session["total_questions"] = 0
- 
+        session["wrong_count"] = 0
 
     if key == "links_and_buttons":
         questions = get_links_and_buttons_data()
@@ -142,7 +146,8 @@ def quiz(key, title):
      
     question_data = questions[session["current_index"]]
     session["total_questions"] = len(questions)
-        
+    notes = question_data["notes"]
+    session["notes"] = notes
     
     if request.method == "POST" and 'token' in request.form:
         session.pop("starter", "")
@@ -158,6 +163,7 @@ def quiz(key, title):
                 grade =  session["number_correct"] / session["total_questions"] 
                 grade = grade * 100
                 grade = int(grade)
+                session["wrong_count"] = 0
                 return redirect(url_for("finish", grade = grade))
             else:
                 session["userA"] = ""
@@ -165,7 +171,7 @@ def quiz(key, title):
                 session.pop("starter", None)
                 session.pop("userA", None)
                 session.pop('_flashes', None)
-                
+                session["wrong_count"] = 0
                 return redirect(url_for("quiz", key=key, title=title, token=token))
 
     
@@ -192,6 +198,7 @@ def quiz(key, title):
             for answer in question_data["answer"]:
                 check_answer = answer.strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower()
                 if user_answer.lower() == check_answer:
+                    session["wrong_count"] = 0
                     session["current_index"] += 1  # Move to next question
                     session["number_correct"] += 1
                     session["userA"] = ""
@@ -202,15 +209,35 @@ def quiz(key, title):
                     break
                   
             if not correct:
+                session["wrong_count"] += 1
+                if session["wrong_count"] >= 3:
+                    #do same stuff as skip code
+                    session["current_index"] += 1
+                    if session["current_index"] >= len(questions):
+                        grade =  session["number_correct"] / session["total_questions"] 
+                        grade = grade * 100
+                        grade = int(grade)
+                        session["wrong_count"] = 0
+                        return redirect(url_for("finish", grade = grade))
+                    else:
+                        session["userA"] = ""
+                        session["starter"] = ""
+                        session.pop("starter", None)
+                        session.pop("userA", None)
+                        session.pop('_flashes', None)
+                        session["wrong_count"] = 0
+                        return redirect(url_for("quiz", key=key, title=title, token=token))
+
                 session["starter"] = ""  # Explicitly reset starter
                 session.pop('_flashes', None)
                 if question_data['feedback'] == "":
-                    flash("Incorrect! Try again","danger")
+                    flash("Attempt {session['wrong_count']}/3 <br>Incorrect! Try again","danger")
                 else:
-                    flash(f"Incorrect! Here is a partial solution to help you out.<br><br><pre style='margin-left:20px; font-family:monospace;'>{question_data['feedback']}</pre>", "danger")  
+                    flash(f"Attempt {session['wrong_count']}/3 <br>Incorrect! Here is a partial solution to help you out.<br><br><pre style='margin-left:20px; font-family:monospace;'>{question_data['feedback']}</pre>", "danger")  
                   
 
             if session["current_index"] >= len(questions):
+                session["wrong_count"] = 0
                 grade =  session["number_correct"] / session["total_questions"] 
                 grade = grade * 100
                 grade = int(grade)
@@ -223,6 +250,7 @@ def quiz(key, title):
             for answer in question_data["answer"]:
                 check_answer = answer.strip().replace(" ", "").replace("\n", "").replace('\r\n', '').replace('\r', '').replace('\"', '\'').lower().replace('\t','')
                 if user_answer.lower() == check_answer:
+                    session["wrong_count"] = 0
                     session["current_index"] += 1  # Move to next question
                     session["number_correct"] += 1
                     session["userA"] = ""
@@ -234,15 +262,38 @@ def quiz(key, title):
                     break
                    
             if not correct:
+                session["wrong_count"] += 1
+                if session["wrong_count"] >= 3:
+                    #do same stuff as skip code
+                    session["current_index"] += 1
+                    if session["current_index"] >= len(questions):
+                        grade =  session["number_correct"] / session["total_questions"] 
+                        grade = grade * 100
+                        grade = int(grade)
+                        session["wrong_count"] = 0
+                        return redirect(url_for("finish", grade = grade))
+                    else:
+                        session["userA"] = ""
+                        session["starter"] = ""
+                        session.pop("starter", None)
+                        session.pop("userA", None)
+                        session.pop('_flashes', None)
+                        session["wrong_count"] = 0
+                        return redirect(url_for("quiz", key=key, title=title, token=token))
+
+                
                 session["starter"] = ""  # Explicitly reset starter
                 session.pop('_flashes', None)
                 if question_data['feedback'] == "":
-                    flash("Incorrect! Try again","danger")
+                    flash(f"Attempt {session['wrong_count']}/3 <br> Incorrect! Try again","danger")
                 else:
-                    flash(f"Incorrect! Here is a partial solution to help you out.<br><br><pre style='margin-left:20px; font-family:monospace;'>{question_data['feedback']}</pre>", "danger")               
+                    flash(f"Attempt {session['wrong_count']}/3 <br>Incorrect! Here is a partial solution to help you out.<br><br><pre style='margin-left:20px; font-family:monospace;'>{question_data['feedback']}</pre>", "danger")   
+
+                
         
         
             if session["current_index"] >= len(questions):
+                session["wrong_count"] = 0
                 grade =  session["number_correct"] / session["total_questions"] 
                 grade = grade * 100
                 grade = int(grade)
@@ -269,7 +320,7 @@ def quiz(key, title):
 
     total_questions = len(questions)
     
-    return render_template("quiz.html", question=question_data["question"],image=image,webimage=webimage, key=key, title=title, userA = session.get("userA",""), token=token, starter=session.get("starter", "") , total_questions=total_questions,current_index=session["current_index"])
+    return render_template("quiz.html", question=question_data["question"],image=image,webimage=webimage, key=key, title=title, userA = session.get("userA",""), token=token, starter=session.get("starter", "") , total_questions=total_questions,current_index=session["current_index"],notes=notes, wrong_count = session["wrong_count"])
 
     
 
