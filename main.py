@@ -15,12 +15,50 @@ from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 
 
+import psycopg
+
+
+
+
+
 
 app = Flask(__name__)
 
 app.secret_key = os.environ['FLASK_SECRET_KEY']
 user_data = []
 # pdfmetrics.registerFont(TTFont('Vera','Vera.ttf'))
+
+
+
+
+
+# with psycopg.connect(host=os.environ['PGHOST'],
+#      dbname=os.environ['PGDATABASE'],
+#      user=os.environ['PGUSER'],
+#      password=os.environ['PGPASSWORD']) as conn:
+#     with conn.cursor() as cur:
+    
+#         cur.execute(
+#             """
+#             ALTER TABLE student_scores 
+#             ALTER COLUMN timestamp TYPE TEXT;
+#             """
+#         )
+
+#         cur.execute(
+#             """
+#             CREATE TABLE student_scores (
+#                 id SERIAL PRIMARY KEY,
+#                 testName TEXT NOT NULL,
+#                 testId TEXT NOT NULL,
+#                 studentName TEXT NOT NULL,
+#                 studentId TEXT NOT NULL,
+#                 studentScore NUMERIC NOT NULL,
+#                 timestamp TIMESTAMP
+#             )
+#             """
+#         )
+
 
 def get_python_loops_data():
     url="https://api.npoint.io/22d05fa3ee9f0da4f95e"
@@ -369,8 +407,28 @@ def finish(grade):
         grade = request.form.get('grade', "")
         # using now() to get current time
         current_time = datetime.datetime.now()
-
-
+        id = session["student_id"]
+        testname = session['title']
+        testid = " "
+        #save to database
+        with psycopg.connect(host=os.environ['PGHOST'],
+             dbname=os.environ['PGDATABASE'],
+             user=os.environ['PGUSER'],
+             password=os.environ['PGPASSWORD']) as conn:
+            with conn.cursor() as cur:
+            # cur.execute(f"INSERT INTO users (email, password,subscribed, key, tfa, thedate, ip, phone) VALUES ('{email}', '{password}', '{subscribed}','{key}','{tfa}','{now}','{ip}','{phone}')")
+    
+                SQL = "INSERT INTO student_scores (testname,testid, studentname,studentid, studentscore, timestamp) VALUES (%s, %s, %s,%s,%s,%s)"
+                data = (
+                testname,
+                testid,
+                name,
+                id,
+                grade,
+                current_time,
+                )
+        
+                cur.execute(SQL, data)
 
         return redirect(url_for('generate_text_file',name=name, grade=grade, current_time=current_time ))
        

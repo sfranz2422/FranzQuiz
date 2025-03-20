@@ -11,6 +11,7 @@ gunicorn = "^21.2.0"
 requests = "^2.32.3"
 pdfkit = "^1.0.0"
 reportlab = "^4.3.1"
+psycopg = "^3.2.6"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md
