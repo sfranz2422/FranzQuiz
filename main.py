@@ -117,7 +117,15 @@ def get_jinja_basics_data():
     res = requests.get(url).json()
     return res
 
+def get_display_positioning_data():
+    url="https://api.npoint.io/e47e5c603cd55c6a906e"
+    res = requests.get(url).json()
+    return res
 
+def get_python_practice_data():
+    url="https://api.npoint.io/c9ea8b8a00d6b67199ab"
+    res = requests.get(url).json()
+    return res
 # List of questions with answers
 questions = []
 
@@ -212,6 +220,15 @@ def quiz(key, title):
         questions = get_jinja_basics_data()
         title = "Jinja Basics"
 
+    if key == "css_display_positioning":
+        questions = get_display_positioning_data()
+        title = "CSS Display and Positioning"
+
+    
+    if key == "python_practice":
+        questions = get_python_practice_data()
+        title = "Python Practice"
+    
     
 
 
