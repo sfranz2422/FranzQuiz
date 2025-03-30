@@ -126,6 +126,14 @@ def get_python_practice_data():
     url="https://api.npoint.io/c9ea8b8a00d6b67199ab"
     res = requests.get(url).json()
     return res
+
+
+def get_css_color_data():
+    url="https://api.npoint.io/d9427e68eedea8cce2b0"
+    res = requests.get(url).json()
+    return res
+
+
 # List of questions with answers
 questions = []
 
@@ -229,8 +237,9 @@ def quiz(key, title):
         questions = get_python_practice_data()
         title = "Python Practice"
     
-    
-
+    if key == "css_color":
+        questions = get_css_color_data()
+        title = "Python Practice"
 
 
     
