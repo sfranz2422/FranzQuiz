@@ -142,6 +142,13 @@ def get_css_color_two_data():
 # List of questions with answers
 questions = []
 
+@app.route("/lessons")
+def lessons():
+    return render_template("lessons.html")
+
+
+
+
 @app.route("/")
 def home():
     # Initialize session variables
