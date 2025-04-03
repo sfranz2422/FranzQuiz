@@ -133,6 +133,11 @@ def get_css_color_data():
     res = requests.get(url).json()
     return res
 
+def get_css_color_two_data():
+    url="https://api.npoint.io/f725f8119cb45565728d"
+    res = requests.get(url).json()
+    return res
+
 
 # List of questions with answers
 questions = []
@@ -239,8 +244,11 @@ def quiz(key, title):
     
     if key == "css_color":
         questions = get_css_color_data()
-        title = "Python Practice"
+        title = "CSS Color One"
 
+    if key == "css_color_two":
+        questions = get_css_color_two_data()
+        title = "CSS Color Two"
 
     
     question_data = questions[session["current_index"]]
