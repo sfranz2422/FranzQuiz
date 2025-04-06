@@ -138,6 +138,15 @@ def get_css_color_two_data():
     res = requests.get(url).json()
     return res
 
+def get_typography_sizing_one_data():
+    url="https://api.npoint.io/11a3edabb7f3899a2935"
+    res = requests.get(url).json()
+    return res
+
+def get_typography_sizing_two_data():
+    url="https://api.npoint.io/28ffe6a010734a799ced"
+    res = requests.get(url).json()
+    return res
 
 # List of questions with answers
 questions = []
@@ -256,6 +265,14 @@ def quiz(key, title):
     if key == "css_color_two":
         questions = get_css_color_two_data()
         title = "CSS Color Two"
+
+    if key == "typography_sizing_one":
+        questions = get_typography_sizing_one_data()
+        title = "Typography and Sizing One"
+
+    if key == "typography_sizing_two":
+        questions = get_typography_sizing_two_data()
+        title = "Typography and Sizing Two"
 
     
     question_data = questions[session["current_index"]]
