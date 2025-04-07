@@ -148,6 +148,12 @@ def get_typography_sizing_two_data():
     res = requests.get(url).json()
     return res
 
+
+def get_cat_photo_one_data():
+    url="https://api.npoint.io/b5f004d362eef8bc1035"
+    res = requests.get(url).json()
+    return res
+
 # List of questions with answers
 questions = []
 
@@ -274,6 +280,11 @@ def quiz(key, title):
         questions = get_typography_sizing_two_data()
         title = "Typography and Sizing Two"
 
+    if key == "cat_photo_1-15":
+        questions = get_cat_photo_one_data()
+        title = "Cat Photo App Steps 1-15"
+
+    
     
     question_data = questions[session["current_index"]]
     session["total_questions"] = len(questions)
