@@ -60,99 +60,167 @@ user_data = []
 #         )
 
 
-def get_python_loops_data():
-    url="https://api.npoint.io/22d05fa3ee9f0da4f95e"
-    res = requests.get(url).json()
-    return res
+# def get_python_loops_data():
+#     url="https://api.npoint.io/22d05fa3ee9f0da4f95e"
+#     res = requests.get(url).json()
+#     return res
 
-def get_links_and_buttons_data():
-    url="https://api.npoint.io/c30e4cf9a778a1b9a622"
-    res = requests.get(url).json()
-    return res
-
-
-def get_basic_html_data():
-    url="https://api.npoint.io/0b9ddad402449729126c"
-    res = requests.get(url).json()
-    return res
-
-def get_borders_and_padding_data():
-    url="https://api.npoint.io/3aeeef8301d2e5df077a"
-    res = requests.get(url).json()
-    return res
-
-def get_css_box_model_data():
-    url="https://api.npoint.io/8be0c96872a500564ec1"
-    res = requests.get(url).json()
-    return res
-
-def get_file_handling_data():
-    url="https://api.npoint.io/beadacc26a1b6b32bbf2"
-    res = requests.get(url).json()
-    return res
-
-def get_p5play_basics_data():
-    url="https://api.npoint.io/81392477ca243d99e34b"
-    res = requests.get(url).json()
-    return res
+# def get_links_and_buttons_data():
+#     url="https://api.npoint.io/c30e4cf9a778a1b9a622"
+#     res = requests.get(url).json()
+#     return res
 
 
-def get_links_buttons_two_data():
-    url="https://api.npoint.io/9cbe6a8116e569a99093"
-    res = requests.get(url).json()
-    return res
+# def get_basic_html_data():
+#     url="https://api.npoint.io/0b9ddad402449729126c"
+#     res = requests.get(url).json()
+#     return res
 
-def get_css_box_model_two_data():
-    url="https://api.npoint.io/e30127563f9d1cd04228"
-    res = requests.get(url).json()
-    return res
+# def get_borders_and_padding_data():
+#     url="https://api.npoint.io/3aeeef8301d2e5df077a"
+#     res = requests.get(url).json()
+#     return res
 
-def get_kaplay_basics_data():
-    url="https://api.npoint.io/ff09c70f8b4968120f16"
-    res = requests.get(url).json()
-    return res
+# def get_css_box_model_data():
+#     url="https://api.npoint.io/8be0c96872a500564ec1"
+#     res = requests.get(url).json()
+#     return res
 
-def get_jinja_basics_data():
-    url="https://api.npoint.io/f108b722ac27b52908f1"
-    res = requests.get(url).json()
-    return res
+# def get_file_handling_data():
+#     url="https://api.npoint.io/beadacc26a1b6b32bbf2"
+#     res = requests.get(url).json()
+#     return res
 
-def get_display_positioning_data():
-    url="https://api.npoint.io/e47e5c603cd55c6a906e"
-    res = requests.get(url).json()
-    return res
-
-def get_python_practice_data():
-    url="https://api.npoint.io/c9ea8b8a00d6b67199ab"
-    res = requests.get(url).json()
-    return res
+# def get_p5play_basics_data():
+#     url="https://api.npoint.io/81392477ca243d99e34b"
+#     res = requests.get(url).json()
+#     return res
 
 
-def get_css_color_data():
-    url="https://api.npoint.io/d9427e68eedea8cce2b0"
-    res = requests.get(url).json()
-    return res
+# def get_links_buttons_two_data():
+#     url="https://api.npoint.io/9cbe6a8116e569a99093"
+#     res = requests.get(url).json()
+#     return res
 
-def get_css_color_two_data():
-    url="https://api.npoint.io/f725f8119cb45565728d"
-    res = requests.get(url).json()
-    return res
+# def get_css_box_model_two_data():
+#     url="https://api.npoint.io/e30127563f9d1cd04228"
+#     res = requests.get(url).json()
+#     return res
 
-def get_typography_sizing_one_data():
-    url="https://api.npoint.io/11a3edabb7f3899a2935"
-    res = requests.get(url).json()
-    return res
+# def get_kaplay_basics_data():
+#     url="https://api.npoint.io/ff09c70f8b4968120f16"
+#     res = requests.get(url).json()
+#     return res
 
-def get_typography_sizing_two_data():
-    url="https://api.npoint.io/28ffe6a010734a799ced"
-    res = requests.get(url).json()
-    return res
+# def get_jinja_basics_data():
+#     url="https://api.npoint.io/f108b722ac27b52908f1"
+#     res = requests.get(url).json()
+#     return res
+
+# def get_display_positioning_data():
+#     url="https://api.npoint.io/e47e5c603cd55c6a906e"
+#     res = requests.get(url).json()
+#     return res
+
+# def get_python_practice_data():
+#     url="https://api.npoint.io/c9ea8b8a00d6b67199ab"
+#     res = requests.get(url).json()
+#     return res
 
 
-def get_cat_photo_one_data():
-    url="https://api.npoint.io/b5f004d362eef8bc1035"
-    res = requests.get(url).json()
-    return res
+# def get_css_color_data():
+#     url="https://api.npoint.io/d9427e68eedea8cce2b0"
+#     res = requests.get(url).json()
+#     return res
+
+# def get_css_color_two_data():
+#     url="https://api.npoint.io/f725f8119cb45565728d"
+#     res = requests.get(url).json()
+#     return res
+
+# def get_typography_sizing_one_data():
+#     url="https://api.npoint.io/11a3edabb7f3899a2935"
+#     res = requests.get(url).json()
+#     return res
+
+# def get_typography_sizing_two_data():
+#     url="https://api.npoint.io/28ffe6a010734a799ced"
+#     res = requests.get(url).json()
+#     return res
+
+
+# def get_cat_photo_one_data():
+#     url="https://api.npoint.io/b5f004d362eef8bc1035"
+#     res = requests.get(url).json()
+#     return res
+
+
+# def get_rpg_adventure_one_data():
+#     url="https://api.npoint.io/d875ec63da9f735648b7"
+#     res = requests.get(url).json()
+#     return res
+# def get_rpg_adventure_two_data():
+#     url="https://api.npoint.io/0585a0ed1fc515a8c741"
+#     res = requests.get(url).json()
+#     return res
+
+# def get_cat_part_two_data():
+#     url="https://api.npoint.io/c09f6c4cc19c98883cad"
+#     res = requests.get(url).json()
+#     return res
+DATA_ENDPOINTS = {
+    "python_loops": "https://api.npoint.io/22d05fa3ee9f0da4f95e",
+    "links_and_buttons": "https://api.npoint.io/c30e4cf9a778a1b9a622",
+    "basic_html": "https://api.npoint.io/0b9ddad402449729126c",
+    "borders_and_padding": "https://api.npoint.io/3aeeef8301d2e5df077a",
+    "css_box_model": "https://api.npoint.io/8be0c96872a500564ec1",
+    "file_handling": "https://api.npoint.io/beadacc26a1b6b32bbf2",
+    "p5play_basics": "https://api.npoint.io/81392477ca243d99e34b",
+    "links_buttons_two": "https://api.npoint.io/9cbe6a8116e569a99093",
+    "css_box_model_two": "https://api.npoint.io/e30127563f9d1cd04228",
+    "kaplay_basics": "https://api.npoint.io/ff09c70f8b4968120f16",
+    "jinja_basics": "https://api.npoint.io/f108b722ac27b52908f1",
+    "display_positioning": "https://api.npoint.io/e47e5c603cd55c6a906e",
+    "python_practice": "https://api.npoint.io/c9ea8b8a00d6b67199ab",
+    "css_color": "https://api.npoint.io/d9427e68eedea8cce2b0",
+    "css_color_two": "https://api.npoint.io/f725f8119cb45565728d",
+    "typography_sizing_one": "https://api.npoint.io/11a3edabb7f3899a2935",
+    "typography_sizing_two": "https://api.npoint.io/28ffe6a010734a799ced",
+    "cat_photo_one": "https://api.npoint.io/b5f004d362eef8bc1035",
+    "rpg_adventure_one": "https://api.npoint.io/d875ec63da9f735648b7",
+    "rpg_adventure_two": "https://api.npoint.io/0585a0ed1fc515a8c741",
+    "cat_part_two": "https://api.npoint.io/c09f6c4cc19c98883cad"
+}
+LESSON_CONFIG = {
+    "links_and_buttons": ("links_and_buttons", "Links and Buttons"),
+    "basic_html": ("basic_html", "Basic HTML"),
+    "python_loops": ("python_loops", "Python Loops"),
+    "css_borders_padding": ("borders_and_padding", "CSS Borders and Padding"),
+    "css_box_model": ("css_box_model", "CSS Box Model"),
+    "file_handling": ("file_handling", "Python Files"),
+    "p5play_basics": ("p5play_basics", "p5 Play Basics"),
+    "links_buttons_two": ("links_buttons_two", "Links Buttons Part 2"),
+    "css_box_model_two": ("css_box_model_two", "CSS Box Model Two"),
+    "kaplay_basics": ("kaplay_basics", "Kaplay Basics"),
+    "jinja_basics": ("jinja_basics", "Jinja Basics"),
+    "css_display_positioning": ("display_positioning", "CSS Display and Positioning"),
+    "python_practice": ("python_practice", "Python Practice"),
+    "css_color": ("css_color", "CSS Color One"),
+    "css_color_two": ("css_color_two", "CSS Color Two"),
+    "typography_sizing_one": ("typography_sizing_one", "Typography and Sizing One"),
+    "typography_sizing_two": ("typography_sizing_two", "Typography and Sizing Two"),
+    "cat_photo_1-15": ("cat_photo_one", "Cat Photo App Steps 1-15"),
+    "rpg_adventure_one": ("rpg_adventure_one", "RPG Adventure One"),
+    "rpg_adventure_two": ("rpg_adventure_two", "RPG Adventure Two"),
+    "cat_part_two": ("cat_part_two", "Cat Photo App Steps 16–30")
+}
+
+def get_lesson_data(key):
+    url = DATA_ENDPOINTS.get(key)
+    if not url:
+        raise ValueError(f"No endpoint found for key: {key}")
+    return requests.get(url).json()
+
 
 # List of questions with answers
 questions = []
@@ -211,79 +279,100 @@ def quiz(key, title):
         session["total_questions"] = 0
         session["wrong_count"] = 0
 
-    if key == "links_and_buttons":
-        questions = get_links_and_buttons_data()
-        title = "Links and Buttons"
 
-    if key == "basic_html":
-        questions = get_basic_html_data()
-        title = "Basic HTML"
+    # get_lesson_data
+    
+    # if key == "links_and_buttons":
+    #     questions = get_lesson_data("links_and_buttons")
+    #     title = "Links and Buttons"
 
-    if key == "python_loops":
-        questions = get_python_loops_data()
-        title = "Python Loops"
+    # if key == "basic_html":
+    #     questions = get_basic_html_data()
+    #     title = "Basic HTML"
 
-    if key == "css_borders_padding":
-        questions = get_borders_and_padding_data()
-        title = "css_borders and padding"
+    # if key == "python_loops":
+    #     questions = get_python_loops_data()
+    #     title = "Python Loops"
 
-    if key == "css_box_model":
-        questions = get_css_box_model_data()
-        title = "css box model"
+    # if key == "css_borders_padding":
+    #     questions = get_borders_and_padding_data()
+    #     title = "css_borders and padding"
 
-    if key == "file_handling":
-        questions = get_file_handling_data()
-        title = "Python Files"
+    # if key == "css_box_model":
+    #     questions = get_css_box_model_data()
+    #     title = "css box model"
+
+    # if key == "file_handling":
+    #     questions = get_file_handling_data()
+    #     title = "Python Files"
         
-    if key == "p5play_basics":
-        questions = get_p5play_basics_data()
-        title = "p5 Play Basics"
+    # if key == "p5play_basics":
+    #     questions = get_p5play_basics_data()
+    #     title = "p5 Play Basics"
 
-    if key == "links_buttons_two":
-        questions = get_links_buttons_two_data()
-        title = "links buttons part 2"
+    # if key == "links_buttons_two":
+    #     questions = get_links_buttons_two_data()
+    #     title = "links buttons part 2"
 
-    if key == "css_box_model_two":
-        questions = get_css_box_model_two_data()
-        title = "css box model two"
+    # if key == "css_box_model_two":
+    #     questions = get_css_box_model_two_data()
+    #     title = "css box model two"
     
-    if key == "kaplay_basics":
-        questions = get_kaplay_basics_data()
-        title = "Kaplay Basics"
+    # if key == "kaplay_basics":
+    #     questions = get_kaplay_basics_data()
+    #     title = "Kaplay Basics"
 
-    if key == "jinja_basics":
-        questions = get_jinja_basics_data()
-        title = "Jinja Basics"
+    # if key == "jinja_basics":
+    #     questions = get_jinja_basics_data()
+    #     title = "Jinja Basics"
 
-    if key == "css_display_positioning":
-        questions = get_display_positioning_data()
-        title = "CSS Display and Positioning"
+    # if key == "css_display_positioning":
+    #     questions = get_display_positioning_data()
+    #     title = "CSS Display and Positioning"
 
     
-    if key == "python_practice":
-        questions = get_python_practice_data()
-        title = "Python Practice"
+    # if key == "python_practice":
+    #     questions = get_python_practice_data()
+    #     title = "Python Practice"
     
-    if key == "css_color":
-        questions = get_css_color_data()
-        title = "CSS Color One"
+    # if key == "css_color":
+    #     questions = get_css_color_data()
+    #     title = "CSS Color One"
 
-    if key == "css_color_two":
-        questions = get_css_color_two_data()
-        title = "CSS Color Two"
+    # if key == "css_color_two":
+    #     questions = get_css_color_two_data()
+    #     title = "CSS Color Two"
 
-    if key == "typography_sizing_one":
-        questions = get_typography_sizing_one_data()
-        title = "Typography and Sizing One"
+    # if key == "typography_sizing_one":
+    #     questions = get_typography_sizing_one_data()
+    #     title = "Typography and Sizing One"
 
-    if key == "typography_sizing_two":
-        questions = get_typography_sizing_two_data()
-        title = "Typography and Sizing Two"
+    # if key == "typography_sizing_two":
+    #     questions = get_typography_sizing_two_data()
+    #     title = "Typography and Sizing Two"
 
-    if key == "cat_photo_1-15":
-        questions = get_cat_photo_one_data()
-        title = "Cat Photo App Steps 1-15"
+    # if key == "cat_photo_1-15":
+    #     questions = get_cat_photo_one_data()
+    #     title = "Cat Photo App Steps 1-15"
 
+    # if key == "rpg_adventure_one":
+    #     questions = get_rpg_adventure_one_data()
+    #     title = "RPG Adventure One"
+
+    # if key == "rpg_adventure_two":
+    #     questions = get_rpg_adventure_two_data()
+    #     title = "RPG Adventure Two"
+    
+    # if key == "cat_part_two":
+    #     questions = get_cat_part_two_data()
+    #     title = "Cat Photo App Steps 16-30"
+
+    if key in LESSON_CONFIG:
+        endpoint_key, title = LESSON_CONFIG[key]
+        questions = get_lesson_data(endpoint_key)
+    else:
+        questions = []
+        title = "Unknown Lesson"
     
     
     question_data = questions[session["current_index"]]
