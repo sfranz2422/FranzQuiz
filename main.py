@@ -632,10 +632,20 @@ def generate_text_file(name, grade, current_time):
     
     return send_file(file_name, as_attachment=True, mimetype="image/png", download_name=f"{name}-{session['title']}.png")
 
+@app.route("/coinDash/<path:name>")
+def serveCoinDashFiles(name):
+    response = send_from_directory(f'./coinDash', name)
+    response.headers.add('Cross-Origin-Opener-Policy', 'same-origin')
+    response.headers.add('Cross-Origin-Embedder-Policy', 'require-corp')
+    return response
+
 @app.route('/coinDash')
 def coinDash():
-    return send_from_directory(app.static_folder +'/coinDash', 'index.html')
-
+    response = make_response(
+        render_template('coinDash.html'))
+    response.headers.add('Cross-Origin-Opener-Policy', 'same-origin')
+    response.headers.add('Cross-Origin-Embedder-Policy', 'require-corp')
+    return response
 
 @app.route('/ads.txt')
 def ads():
@@ -643,3 +653,6 @@ def ads():
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5000)
+
+
+
