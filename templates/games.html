@@ -61,6 +61,9 @@
             background-color: #343a40; /* Dark grey */
             color: #fff; /* White text on hover */
         }
+        .card {
+            min-width: 250px; /* Adjust as needed */
+        }
     </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7396041206890592"
          crossorigin="anonymous"></script>
@@ -93,84 +96,24 @@
 
 
     <div class="container text-center mt-5">
-        <h1 class="mb-4">Lessons</h1>
+        <h1 class="mb-4">Games</h1>
 
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-            <!-- Link 1 -->
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">Web Design 1</h5>
-                        <p class="card-text">Choose A Lesson</p>
-                     
-
-
-                        <div class="list-group">
-
-
-                            
-                               <a href="https://syntaxgymlessons.replit.app/Typography%20&%20Sizing/index.html" class="list-group-item list-group-item-action" >Typography & Sizing</a>
-                            
+        <!-- Center the row with flexbox -->
+        <div class="d-flex justify-content-center">
+            <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+                <!-- Link 1 -->
+                <div class="col-12 col-md-6 d-flex justify-content-center">
+                    <div class="card shadow" style="min-width: 250px;">
+                        <div class="card-body">
+                            <div class="list-group">
+                                <a href="{{ url_for('coinDash') }}" class="list-group-item list-group-item-action">
+                                    Coin Dash
+                                </a>
+                            </div>      
                         </div>
-
-                        
                     </div>
                 </div>
             </div>
-
-            <!-- Link 2 -->
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">Web Design 2</h5>
-                        <p class="card-text">Choose A Lesson</p>
-                         <div class="list-group">
-                      
-                              <a href="#" class="list-group-item list-group-item-action" >Jinja Lesson</a>
-
-                             
-
-                             </div>
-                         </div>
-                </div>
-            </div>
-
-            <!-- Link 3 -->
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">JavaScript</h5>
-                        <p class="card-text">Choose A Lesson</p>
-            
-                         <div class="list-group">
-                         <a href="#" class="list-group-item list-group-item-action" >JavaScript Lesson</a>
-                             
-                           
-
-                             
-                             </div>
-                        
-                    </div>
-                </div>
-            </div>
-
-            <!-- Link 4 -->
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">Python</h5>
-                        <p class="card-text">Choose A Lesson</p>
-                           <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action" >Python Lesson</a>
-
-
-                       
-                               
-                           </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 

@@ -225,6 +225,10 @@ questions = []
 def lessons():
     return render_template("lessons.html")
 
+@app.route("/games")
+def games():
+    return render_template("games.html")
+
 
 
 
