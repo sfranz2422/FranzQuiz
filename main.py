@@ -28,10 +28,6 @@ app.secret_key = os.environ['FLASK_SECRET_KEY']
 user_data = []
 # pdfmetrics.registerFont(TTFont('Vera','Vera.ttf'))
 
-
-
-
-
 # with psycopg.connect(host=os.environ['PGHOST'],
 #      dbname=os.environ['PGDATABASE'],
 #      user=os.environ['PGUSER'],
@@ -635,6 +631,10 @@ def generate_text_file(name, grade, current_time):
 
     
     return send_file(file_name, as_attachment=True, mimetype="image/png", download_name=f"{name}-{session['title']}.png")
+
+@app.route('/coinDash')
+def coinDash():
+    return send_from_directory(app.static_folder +'/coinDash', 'index.html')
 
 
 @app.route('/ads.txt')
