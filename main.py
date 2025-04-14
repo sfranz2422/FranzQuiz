@@ -185,7 +185,8 @@ DATA_ENDPOINTS = {
     "cat_photo_one": "https://api.npoint.io/b5f004d362eef8bc1035",
     "rpg_adventure_one": "https://api.npoint.io/d875ec63da9f735648b7",
     "rpg_adventure_two": "https://api.npoint.io/0585a0ed1fc515a8c741",
-    "cat_part_two": "https://api.npoint.io/c09f6c4cc19c98883cad"
+    "cat_part_two": "https://api.npoint.io/c09f6c4cc19c98883cad",
+    "cat_part_31-45":"https://api.npoint.io/71b75ef4ccfd8559f51e"
 }
 LESSON_CONFIG = {
     "links_and_buttons": ("links_and_buttons", "Links and Buttons"),
@@ -208,7 +209,8 @@ LESSON_CONFIG = {
     "cat_photo_1-15": ("cat_photo_one", "Cat Photo App Steps 1-15"),
     "rpg_adventure_one": ("rpg_adventure_one", "RPG Adventure One"),
     "rpg_adventure_two": ("rpg_adventure_two", "RPG Adventure Two"),
-    "cat_part_two": ("cat_part_two", "Cat Photo App Steps 16–30")
+    "cat_part_two": ("cat_part_two", "Cat Photo App Steps 16–30"),
+    "cat_part_31-45":("cat_part_31-45", "Cat Photo App Steps 31–45")
 }
 
 def get_lesson_data(key):

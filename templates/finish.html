@@ -36,6 +36,7 @@
                     <h2 class="card-title mb-4">Current Grade: {{ grade }}</h2>
                      <h4 class="card-title mb-4">After your report is created, attach the downloaded picture to the Google Classroom Assignment.</h4>
                      <p id="question" class="lead">Do you want to generate your report or try again?</p>
+                    <p id="question" class="lead"><strong>After </strong>you generate your report you should play a game.</p>
 <form id="quiz-form" method="POST" action="{{ url_for('finish', grade=grade) }}">
 <input type="hidden" name="grade" value = "{{ grade }}">
     <input type="hidden" name="name" value = "{{ session['name'] }}">
