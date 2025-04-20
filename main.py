@@ -186,7 +186,8 @@ DATA_ENDPOINTS = {
     "rpg_adventure_one": "https://api.npoint.io/d875ec63da9f735648b7",
     "rpg_adventure_two": "https://api.npoint.io/0585a0ed1fc515a8c741",
     "cat_part_two": "https://api.npoint.io/c09f6c4cc19c98883cad",
-    "cat_part_31-45":"https://api.npoint.io/71b75ef4ccfd8559f51e"
+    "cat_part_31-45":"https://api.npoint.io/71b75ef4ccfd8559f51e",
+    "cat_part_46-60":"https://api.npoint.io/aa380e01d35fa421c234"
 }
 LESSON_CONFIG = {
     "links_and_buttons": ("links_and_buttons", "Links and Buttons"),
@@ -210,7 +211,8 @@ LESSON_CONFIG = {
     "rpg_adventure_one": ("rpg_adventure_one", "RPG Adventure One"),
     "rpg_adventure_two": ("rpg_adventure_two", "RPG Adventure Two"),
     "cat_part_two": ("cat_part_two", "Cat Photo App Steps 16–30"),
-    "cat_part_31-45":("cat_part_31-45", "Cat Photo App Steps 31–45")
+    "cat_part_31-45":("cat_part_31-45", "Cat Photo App Steps 31–45"),
+    "cat_part_46-60":("cat_part_46-60","Cat Photo App Steps 46-60")
 }
 
 def get_lesson_data(key):
@@ -590,7 +592,7 @@ def finish(grade):
         
                 cur.execute(SQL, data)
 
-        return redirect(url_for('generate_text_file',name=name, grade=grade, current_time=current_time ))
+        return redirect(url_for('generate_text_file',name=name, grade=grade, current_time=current_time,testname=testname ))
        
    
     
@@ -598,8 +600,8 @@ def finish(grade):
 
 
 
-@app.route('/download/<name>/<grade>/<current_time>')
-def generate_text_file(name, grade, current_time):
+@app.route('/download/<name>/<grade>/<current_time>/<testname>')
+def generate_text_file(name, grade, current_time,testname):
     file_name = f"{name}-{session['title']}.png"
     
     id = session["student_id"]
@@ -614,7 +616,7 @@ def generate_text_file(name, grade, current_time):
     except:
         font = ImageFont.load_default()  # Fallback if font is missing
 
-    text = f"Name: {name}\nStudent id: {id}\nGrade: {grade}\nTime: {current_time}"
+    text = f"Name: {name}\nStudent id: {id}\nTest: {testname}\nGrade: {grade}\nTime: {current_time}"
     draw.multiline_text((20, 50), text, fill=(0, 0, 0), font=font)  # Black text
 
     img.save(file_name)
