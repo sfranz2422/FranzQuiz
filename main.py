@@ -266,9 +266,9 @@ def sign_in(key, title):
     
     if request.method == "POST" and 'token' in request.form:
         name = request.form.get("name", "")
-        id = request.form.get("id", "")
+        # id = request.form.get("id", "")
         session["name"] = name
-        session["student_id"] = id
+        session["student_id"] = "No Student ID"
         session["title"] = title
         
         
