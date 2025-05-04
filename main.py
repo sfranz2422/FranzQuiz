@@ -189,7 +189,8 @@ DATA_ENDPOINTS = {
     "cat_part_31-45":"https://api.npoint.io/71b75ef4ccfd8559f51e",
     "cat_part_46-60":"https://api.npoint.io/aa380e01d35fa421c234",
     "cat_photo_app_41_60_part_2":"https://api.npoint.io/aec53f6c646c8972c10e",
-    "cat_photo_app_61_71":"https://api.npoint.io/ea8fe088139fb66f11cc"
+    "cat_photo_app_61_71":"https://api.npoint.io/ea8fe088139fb66f11cc",
+    "cafe_menu_1_15":"https://api.npoint.io/c55ae3db31dd111be434"
 }
 LESSON_CONFIG = {
     "links_and_buttons": ("links_and_buttons", "Links and Buttons"),
@@ -216,7 +217,8 @@ LESSON_CONFIG = {
     "cat_part_31-45":("cat_part_31-45", "Cat Photo App Steps 31–45"),
     "cat_part_46-60":("cat_part_46-60","Cat Photo App Steps 46-60"),
     "cat_photo_app_41_60_part_2":("cat_photo_app_41_60_part_2","Cat Photo App Steps 46-60 Part 2"),
-    "cat_photo_app_61_71":("cat_photo_app_61_71","Cat Photo App Steps 61-71")
+    "cat_photo_app_61_71":("cat_photo_app_61_71","Cat Photo App Steps 61-71"),
+    "cafe_menu_1_15":("cafe_menu_1_15","Cafe Menu 1-15")
 }
 
 def get_lesson_data(key):
