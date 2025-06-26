@@ -1,0 +1,2 @@
+# Syntax Gym
+Fla web application built to provide real-time, syntax-focused coding practice for students learning HTML, CSS, and JavaScript. The platform features coding exercises and quizzes, integrated with a custom feedback engine that parses user input and validates syntax accuracy. The frontend leverages JavaScript for a lightweight, responsive UI, while the backend uses Flask, Jinja templating, and SQLite for session management, user progress tracking, and content delivery.
