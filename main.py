@@ -191,7 +191,9 @@ DATA_ENDPOINTS = {
     "cat_photo_app_41_60_part_2":"https://api.npoint.io/aec53f6c646c8972c10e",
     "cat_photo_app_61_71":"https://api.npoint.io/ea8fe088139fb66f11cc",
     "cafe_menu_1_15":"https://api.npoint.io/c55ae3db31dd111be434",
-    "cafe_menu_16-30":"https://api.npoint.io/491b08376fb9d8f54faa"
+    "cafe_menu_16-30":"https://api.npoint.io/491b08376fb9d8f54faa",
+     "intro_to_js":"https://api.npoint.io/18249b179d7eb969f560",
+
 }
 LESSON_CONFIG = {
     "links_and_buttons": ("links_and_buttons", "Links and Buttons"),
@@ -220,7 +222,8 @@ LESSON_CONFIG = {
     "cat_photo_app_41_60_part_2":("cat_photo_app_41_60_part_2","Cat Photo App Steps 46-60 Part 2"),
     "cat_photo_app_61_71":("cat_photo_app_61_71","Cat Photo App Steps 61-71"),
     "cafe_menu_1_15":("cafe_menu_1_15","Cafe Menu 1-15"),
-    "cafe_menu_16-30":("cafe_menu_16-30","Cafe Menu 16-30")
+    "cafe_menu_16-30":("cafe_menu_16-30","Cafe Menu 16-30"),
+    "intro_to_js":("intro_to_js","Intro to JavaScript")
 }
 
 def get_lesson_data(key):
