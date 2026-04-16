@@ -26,6 +26,28 @@ app = Flask(__name__)
 
 app.secret_key = os.environ['FLASK_SECRET_KEY']
 user_data = []
+
+
+with psycopg.connect(host=os.environ['PGHOST'],
+     dbname=os.environ['PGDATABASE'],
+     user=os.environ['PGUSER'],
+     password=os.environ['PGPASSWORD']) as conn:
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS student_scores (
+                id SERIAL PRIMARY KEY,
+                testName TEXT NOT NULL,
+                testId TEXT NOT NULL,
+                studentName TEXT NOT NULL,
+                studentId TEXT NOT NULL,
+                studentScore NUMERIC NOT NULL,
+                timestamp TIMESTAMP
+            )
+            """
+        )
+        conn.commit()
+
 # pdfmetrics.registerFont(TTFont('Vera','Vera.ttf'))
 
 # with psycopg.connect(host=os.environ['PGHOST'],
