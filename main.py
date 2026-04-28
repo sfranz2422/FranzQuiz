@@ -28,25 +28,25 @@ app.secret_key = os.environ['FLASK_SECRET_KEY']
 user_data = []
 
 
-with psycopg.connect(host=os.environ['PGHOST'],
-     dbname=os.environ['PGDATABASE'],
-     user=os.environ['PGUSER'],
-     password=os.environ['PGPASSWORD']) as conn:
-    with conn.cursor() as cur:
-        cur.execute(
-            """
-            CREATE TABLE IF NOT EXISTS student_scores (
-                id SERIAL PRIMARY KEY,
-                testName TEXT NOT NULL,
-                testId TEXT NOT NULL,
-                studentName TEXT NOT NULL,
-                studentId TEXT NOT NULL,
-                studentScore NUMERIC NOT NULL,
-                timestamp TIMESTAMP
-            )
-            """
-        )
-        conn.commit()
+# with psycopg.connect(host=os.environ['PGHOST'],
+#      dbname=os.environ['PGDATABASE'],
+#      user=os.environ['PGUSER'],
+#      password=os.environ['PGPASSWORD']) as conn:
+#     with conn.cursor() as cur:
+#         cur.execute(
+#             """
+#             CREATE TABLE IF NOT EXISTS student_scores (
+#                 id SERIAL PRIMARY KEY,
+#                 testName TEXT NOT NULL,
+#                 testId TEXT NOT NULL,
+#                 studentName TEXT NOT NULL,
+#                 studentId TEXT NOT NULL,
+#                 studentScore NUMERIC NOT NULL,
+#                 timestamp TIMESTAMP
+#             )
+#             """
+#         )
+#         conn.commit()
 
 # pdfmetrics.registerFont(TTFont('Vera','Vera.ttf'))
 
@@ -606,24 +606,24 @@ def finish(grade):
         testname = session['title']
         testid = " "
         #save to database
-        with psycopg.connect(host=os.environ['PGHOST'],
-             dbname=os.environ['PGDATABASE'],
-             user=os.environ['PGUSER'],
-             password=os.environ['PGPASSWORD']) as conn:
-            with conn.cursor() as cur:
-            # cur.execute(f"INSERT INTO users (email, password,subscribed, key, tfa, thedate, ip, phone) VALUES ('{email}', '{password}', '{subscribed}','{key}','{tfa}','{now}','{ip}','{phone}')")
+        # with psycopg.connect(host=os.environ['PGHOST'],
+        #      dbname=os.environ['PGDATABASE'],
+        #      user=os.environ['PGUSER'],
+        #      password=os.environ['PGPASSWORD']) as conn:
+        #     with conn.cursor() as cur:
+        #     # cur.execute(f"INSERT INTO users (email, password,subscribed, key, tfa, thedate, ip, phone) VALUES ('{email}', '{password}', '{subscribed}','{key}','{tfa}','{now}','{ip}','{phone}')")
     
-                SQL = "INSERT INTO student_scores (testname,testid, studentname,studentid, studentscore, timestamp) VALUES (%s, %s, %s,%s,%s,%s)"
-                data = (
-                testname,
-                testid,
-                name,
-                id,
-                grade,
-                current_time,
-                )
+        #         SQL = "INSERT INTO student_scores (testname,testid, studentname,studentid, studentscore, timestamp) VALUES (%s, %s, %s,%s,%s,%s)"
+        #         data = (
+        #         testname,
+        #         testid,
+        #         name,
+        #         id,
+        #         grade,
+        #         current_time,
+        #         )
         
-                cur.execute(SQL, data)
+        #         cur.execute(SQL, data)
 
         return redirect(url_for('generate_text_file',name=name, grade=grade, current_time=current_time,testname=testname ))
        
