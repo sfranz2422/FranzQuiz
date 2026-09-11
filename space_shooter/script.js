@@ -41,11 +41,11 @@ const ENEMY_HEALTH = 100;
 const BULLET_DAMAGE = 25;
 
 // Enemy spawn rate ramps up as the score climbs
-const SPAWN_SLOW = 1.0; // seconds between enemies at score 0
-const SPAWN_FAST = 0.3; // seconds between enemies at max difficulty
-const SCORE_FOR_MAX_DIFFICULTY = 400;
+const SPAWN_SLOW = 0.7; // seconds between enemies at score 0
+const SPAWN_FAST = 0.2; // seconds between enemies at max difficulty
+const SCORE_FOR_MAX_DIFFICULTY = 300;
 
-const BONUS_EVERY = 8; // seconds
+const BONUS_EVERY = 15; // seconds
 
 // -------------------------------------------------------------
 //  LOADING SCREEN  (replaces the Phaser "load" scene)
@@ -249,7 +249,9 @@ scene("play", () => {
     }
 
     function newEnemy() {
-        const enemy = add([
+        const randomNumber = Math.floor(Math.random() * 3) + 1;
+
+        let enemy = add([
             sprite("enemy", { width: 34, height: 34 }),
             pos(rand(40, WIDTH - 40), 0),
             anchor("bot"),
@@ -257,9 +259,51 @@ scene("play", () => {
             color(255, 255, 255),
             scale(1),
             health(ENEMY_HEALTH),
-            move(DOWN, rand(150, 250)),
+            move(DOWN, rand(100, 200)),
             "enemy",
         ]);
+
+        if (randomNumber === 1){
+        let enemy = add([
+            sprite("enemy", { width: 34, height: 34 }),
+            pos(rand(40, WIDTH - 40), 0),
+            anchor("bot"),
+            area({ scale: 0.8 }),
+            color(0, 255, 0),
+            scale(1),
+            health(ENEMY_HEALTH),
+            move(DOWN, rand(200, 350)),
+            "enemy",
+        ]);
+    }
+    if (randomNumber === 2){
+        let enemy = add([
+            sprite("enemy", { width: 34, height: 34 }),
+            pos(rand(40, WIDTH - 40), 0),
+            anchor("bot"),
+            area({ scale: 0.8 }),
+            color(0, 0, 255),
+            scale(1),
+            health(ENEMY_HEALTH),
+            move(DOWN, rand(250, 400)),
+            "enemy",
+        ]);
+    }
+    if (randomNumber === 3){
+        let enemy = add([
+            sprite("enemy", { width: 34, height: 34 }),
+            pos(rand(40, WIDTH - 40), 0),
+            anchor("bot"),
+            area({ scale: 0.8 }),
+            color(255, 0, 0),
+            scale(1),
+            health(ENEMY_HEALTH),
+            move(DOWN, rand(350, 500)),
+            "enemy",
+        ]);
+    }
+
+
 
         // Stand-in for the two-frame Phaser animation: a gentle squash
         const offset = rand(0, 10);
