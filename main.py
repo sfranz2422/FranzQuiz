@@ -689,14 +689,14 @@ def coinDash():
     return response
 
 @app.route("/space_shooter/<path:name>")
-def serveCoinDashFiles(name):
+def servespace_shooterfiles(name):
     response = send_from_directory(f'./space_shooter', name)
     response.headers.add('Cross-Origin-Opener-Policy', 'same-origin')
     response.headers.add('Cross-Origin-Embedder-Policy', 'require-corp')
     return response
 
 @app.route('/space_shooter')
-def coinDash():
+def space_shooter():
     response = make_response(
         render_template('space_shooter.html'))
     response.headers.add('Cross-Origin-Opener-Policy', 'same-origin')
