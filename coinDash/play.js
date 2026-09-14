@@ -262,7 +262,7 @@ movePlayer(){
         this.player.body.velocity.x = 0;
         this.player.setFrame(0)
     }
-    if(this.space.isDown && this.player.body.onFloor()){
+    if((this.space.isDown && this.player.body.onFloor())||(this.up.isDown && this.player.body.onFloor())){
         this.jumpSound.play()
         this.player.body.velocity.y = -320;
     }
