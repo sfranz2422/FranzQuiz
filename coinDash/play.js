@@ -43,6 +43,7 @@ class Play extends Phaser.Scene
         this.space = this.input.keyboard.addKey("space")
          this.left = this.input.keyboard.addKey("left")
         this.right = this.input.keyboard.addKey("right")
+        this.up = this.input.keyboard.addKey("up")
         this.physics.add.collider(this.player, this.walls);
         this.physics.add.collider(this.enemies, this.walls);
 
