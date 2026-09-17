@@ -41,8 +41,8 @@ const ENEMY_HEALTH = 100;
 const BULLET_DAMAGE = 25;
 
 // Enemy spawn rate ramps up as the score climbs
-const SPAWN_SLOW = 0.7; // seconds between enemies at score 0
-const SPAWN_FAST = 0.2; // seconds between enemies at max difficulty
+const SPAWN_SLOW = 0.4; // seconds between enemies at score 0
+const SPAWN_FAST = 0.1; // seconds between enemies at max difficulty
 const SCORE_FOR_MAX_DIFFICULTY = 300;
 
 const BONUS_EVERY = 15; // seconds
@@ -249,23 +249,26 @@ scene("play", () => {
     }
 
 function newEnemy() {
-        const randomNumber = Math.floor(Math.random() * 3) + 1;
+        const randomNumber = Math.floor(Math.random() * 4); // 0 to 3
         
         let eColor = rgb(255, 255, 255);
         let eSpeed = rand(100, 200);
+        let eHealth = 100; // 4 hits (Slowest)
 
         if (randomNumber === 1){
             eColor = rgb(0, 255, 0);
-            eSpeed = rand(200, 350);
+            eSpeed = rand(200, 300);
+            eHealth = 75; // 3 hits
         } else if (randomNumber === 2){
             eColor = rgb(0, 0, 255);
-            eSpeed = rand(250, 400);
+            eSpeed = rand(300, 400);
+            eHealth = 50; // 2 hits
         } else if (randomNumber === 3){
             eColor = rgb(255, 0, 0);
-            eSpeed = rand(350, 500);
+            eSpeed = rand(400, 500);
+            eHealth = 25; // 1 hit (Fastest)
         }
 
-        // Spawn a single enemy with the selected color and speed
         let enemy = add([
             sprite("enemy", { width: 34, height: 34 }),
             pos(rand(40, WIDTH - 40), 0),
@@ -273,12 +276,12 @@ function newEnemy() {
             area({ scale: 0.8 }),
             color(eColor),
             scale(1),
-            health(ENEMY_HEALTH),
+            health(eHealth),
             move(DOWN, eSpeed),
             "enemy",
+            { origColor: eColor } // Save the color to fix the hit flash
         ]);
 
-        // Stand-in for the two-frame Phaser animation: a gentle squash
         const offset = rand(0, 10);
         enemy.onUpdate(() => {
             const s = Math.sin((time() + offset) * 8) * 0.08;
@@ -286,7 +289,6 @@ function newEnemy() {
             if (enemy.pos.y > HEIGHT + 40) destroy(enemy);
         });
 
-        // Now this properly attaches to EVERY enemy spawned
         enemy.on("death", () => {
             explode(enemy.pos, 20, 150, 0.5);
             destroy(enemy);
@@ -323,17 +325,18 @@ function newEnemy() {
     // -------------------------------------------------------------
     //  COLLISIONS
     // -------------------------------------------------------------
-    onCollide("bullet", "enemy", (bullet, enemy) => {
+onCollide("bullet", "enemy", (bullet, enemy) => {
         destroy(bullet);
 
-        // Knock the enemy back and flash it red
         enemy.pos.y -= 10;
-        enemy.color = rgb(255, 185, 185);
+        
+        // Flash bright white, then return to the correct color tier
+        enemy.color = rgb(255, 255, 255);
         wait(0.1, () => {
-            if (enemy.exists()) enemy.color = rgb(255, 255, 255);
+            if (enemy.exists()) enemy.color = enemy.origColor;
         });
 
-        enemy.hurt(BULLET_DAMAGE); // fires "death" at 0 hp
+        enemy.hurt(BULLET_DAMAGE); 
     });
 
     onCollide("player", "bonus", (p, b) => {
