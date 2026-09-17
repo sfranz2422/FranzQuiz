@@ -248,62 +248,35 @@ scene("play", () => {
         }
     }
 
-    function newEnemy() {
+function newEnemy() {
         const randomNumber = Math.floor(Math.random() * 3) + 1;
-
-        let enemy = add([
-            sprite("enemy", { width: 34, height: 34 }),
-            pos(rand(40, WIDTH - 40), 0),
-            anchor("bot"),
-            area({ scale: 0.8 }),
-            color(255, 255, 255),
-            scale(1),
-            health(ENEMY_HEALTH),
-            move(DOWN, rand(100, 200)),
-            "enemy",
-        ]);
+        
+        let eColor = rgb(255, 255, 255);
+        let eSpeed = rand(100, 200);
 
         if (randomNumber === 1){
-        let enemy = add([
-            sprite("enemy", { width: 34, height: 34 }),
-            pos(rand(40, WIDTH - 40), 0),
-            anchor("bot"),
-            area({ scale: 0.8 }),
-            color(0, 255, 0),
-            scale(1),
-            health(ENEMY_HEALTH),
-            move(DOWN, rand(200, 350)),
-            "enemy",
-        ]);
-    }
-    if (randomNumber === 2){
-        let enemy = add([
-            sprite("enemy", { width: 34, height: 34 }),
-            pos(rand(40, WIDTH - 40), 0),
-            anchor("bot"),
-            area({ scale: 0.8 }),
-            color(0, 0, 255),
-            scale(1),
-            health(ENEMY_HEALTH),
-            move(DOWN, rand(250, 400)),
-            "enemy",
-        ]);
-    }
-    if (randomNumber === 3){
-        let enemy = add([
-            sprite("enemy", { width: 34, height: 34 }),
-            pos(rand(40, WIDTH - 40), 0),
-            anchor("bot"),
-            area({ scale: 0.8 }),
-            color(255, 0, 0),
-            scale(1),
-            health(ENEMY_HEALTH),
-            move(DOWN, rand(350, 500)),
-            "enemy",
-        ]);
-    }
+            eColor = rgb(0, 255, 0);
+            eSpeed = rand(200, 350);
+        } else if (randomNumber === 2){
+            eColor = rgb(0, 0, 255);
+            eSpeed = rand(250, 400);
+        } else if (randomNumber === 3){
+            eColor = rgb(255, 0, 0);
+            eSpeed = rand(350, 500);
+        }
 
-
+        // Spawn a single enemy with the selected color and speed
+        let enemy = add([
+            sprite("enemy", { width: 34, height: 34 }),
+            pos(rand(40, WIDTH - 40), 0),
+            anchor("bot"),
+            area({ scale: 0.8 }),
+            color(eColor),
+            scale(1),
+            health(ENEMY_HEALTH),
+            move(DOWN, eSpeed),
+            "enemy",
+        ]);
 
         // Stand-in for the two-frame Phaser animation: a gentle squash
         const offset = rand(0, 10);
@@ -313,6 +286,7 @@ scene("play", () => {
             if (enemy.pos.y > HEIGHT + 40) destroy(enemy);
         });
 
+        // Now this properly attaches to EVERY enemy spawned
         enemy.on("death", () => {
             explode(enemy.pos, 20, 150, 0.5);
             destroy(enemy);
