@@ -253,6 +253,9 @@ function newEnemy() {
         
         let eColor = rgb(255, 255, 255);
         let eSpeed = rand(100, 200);
+
+        const zigWidth = 150; // How wide the left/right movement is
+        const zigSpeed = 5; // How fast it switches directions
         let eHealth = 100; // 4 hits (Slowest)
 
         if (randomNumber === 1){
@@ -277,9 +280,7 @@ function newEnemy() {
             color(eColor),
             scale(1),
             health(eHealth),
-            // move(DOWN, eSpeed),
-            move(player.pos.angle(pos(rand(40, WIDTH - 40), PLAYER_Y)), eSpeed),
-
+           
             "enemy",
             { origColor: eColor } // Save the color to fix the hit flash
         ]);
@@ -287,6 +288,7 @@ function newEnemy() {
         const offset = rand(0, 10);
         enemy.onUpdate(() => {
             const s = Math.sin((time() + offset) * 8) * 0.08;
+            enemy.move(Math.sin(time() * zigSpeed) * zigWidth, eSpeed);
             enemy.scale = vec2(1 + s, 1 - s);
             if (enemy.pos.y > HEIGHT + 40) destroy(enemy);
         });
