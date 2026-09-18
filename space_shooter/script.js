@@ -254,7 +254,7 @@ function newEnemy() {
         let eColor = rgb(255, 255, 255);
         let eSpeed = rand(100, 200);
 
-        const zigWidth = 150; // How wide the left/right movement is
+        const zigWidth = 300; // How wide the left/right movement is
         const zigSpeed = 5; // How fast it switches directions
         let eHealth = 100; // 4 hits (Slowest)
 
