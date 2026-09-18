@@ -4,7 +4,9 @@
 kaplay({
     width: 600,
     height: 400,
-    background: [0, 162, 255], 
+    background: [0, 162, 255],
+    letterbox: true,   // preserves 600:400 aspect ratio, adds bars if needed
+    stretch: true,     // scales canvas CSS size to fill its container
 });
 
 // Gravity — you have setGravity(1200). 
