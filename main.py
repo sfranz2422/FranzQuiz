@@ -674,14 +674,14 @@ def generate_text_file(name, grade, current_time,testname):
     return send_file(file_name, as_attachment=True, mimetype="image/png", download_name=f"{name}-{session['title']}.png")
 
 @app.route("/dark-blue/<path:name>")
-def serveCoinDashFiles(name):
+def serveDarkBlueFiles(name):
     response = send_from_directory(f'./dark-blue', name)
     response.headers.add('Cross-Origin-Opener-Policy', 'same-origin')
     response.headers.add('Cross-Origin-Embedder-Policy', 'require-corp')
     return response
 
 @app.route('/dark-blue')
-def coinDash():
+def darkBlue():
     response = make_response(
         render_template('dark-blue.html'))
     response.headers.add('Cross-Origin-Opener-Policy', 'same-origin')
