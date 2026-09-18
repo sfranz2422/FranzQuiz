@@ -277,7 +277,9 @@ function newEnemy() {
             color(eColor),
             scale(1),
             health(eHealth),
-            move(DOWN, eSpeed),
+            // move(DOWN, eSpeed),
+            move(player.pos.angle(pos(rand(40, WIDTH - 40), PLAYER_Y)), eSpeed),
+
             "enemy",
             { origColor: eColor } // Save the color to fix the hit flash
         ]);
