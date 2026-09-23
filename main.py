@@ -673,6 +673,21 @@ def generate_text_file(name, grade, current_time,testname):
     
     return send_file(file_name, as_attachment=True, mimetype="image/png", download_name=f"{name}-{session['title']}.png")
 
+@app.route("/flappy_bean/<path:name>")
+def serveFlappy_beanFiles(name):
+    response = send_from_directory(f'./flappy_bean, name)
+    response.headers.add('Cross-Origin-Opener-Policy', 'same-origin')
+    response.headers.add('Cross-Origin-Embedder-Policy', 'require-corp')
+    return response
+
+@app.route('/flappy_bean')
+def flappy_bean():
+    response = make_response(
+        render_template('flappy_bean.html'))
+    response.headers.add('Cross-Origin-Opener-Policy', 'same-origin')
+    response.headers.add('Cross-Origin-Embedder-Policy', 'require-corp')
+    return response
+
 @app.route("/dark-blue/<path:name>")
 def serveDarkBlueFiles(name):
     response = send_from_directory(f'./dark-blue', name)
