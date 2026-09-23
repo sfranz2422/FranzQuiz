@@ -675,7 +675,7 @@ def generate_text_file(name, grade, current_time,testname):
 
 @app.route("/flappy_bean/<path:name>")
 def serveFlappy_beanFiles(name):
-    response = send_from_directory(f'./flappy_bean, name)
+    response = send_from_directory(f'./flappy_bean', name)
     response.headers.add('Cross-Origin-Opener-Policy', 'same-origin')
     response.headers.add('Cross-Origin-Embedder-Policy', 'require-corp')
     return response
